@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Canvas app playground</title>
+    <style>
+    canvas {position:absolute;left:0;top:0}
+#canvas {background:#eef}
+</style>
 </head>
 <body>
-    <canvas id="canvas" width='1366px' height='768px'>Your browser does not support Canvas</canvas>
+    <canvas id="canvas" width=400 height=400></canvas>
+    <canvas id="tempcanvas" width=400 height=400></canvas>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type='text/javascript'>
@@ -55,40 +60,98 @@
         // ctx.quadraticCurveTo(125, 25, 75, 25);
         // ctx.stroke();
         
-        let canvas = document.getElementById('canvas');
-        let context = canvas.getContext('2d');
-        let dragging = false;
-        context.strokeStyle = "#df4b26";
-        context.lineJoin = "round";
-        context.lineWidth = 5;
-        $('#canvas').mousedown(function(e){
-            let mouseX = e.pageX - this.offsetLeft;
-            let mouseY = e.pageY - this.offsetTop;
-            context.beginPath();
-            context.moveTo(mouseX,mouseY);
-            draw(mouseX,mouseY);
-            dragging = true;
-        });
-        $('#canvas').mousemove(function(e){
-            if(dragging){
-                let mouseX = e.pageX - this.offsetLeft;
-                let mouseY = e.pageY - this.offsetTop;
-                draw(mouseX,mouseY);
-            }
-        });
-        $('#canvas').mouseup(function(e){
-            dragging = false;
-        });
-        $('#canvas').mouseleave(function(e){
-            dragging = false;
-        });
+        // let canvas = document.getElementById('canvas');
+        // let context = canvas.getContext('2d');
+        // let dragging = false;
+        // context.strokeStyle = "#df4b26";
+        // context.lineJoin = "round";
+        // context.lineWidth = 5;
+        // $('#canvas').mousedown(function(e){
+        //     let mouseX = e.pageX - this.offsetLeft;
+        //     let mouseY = e.pageY - this.offsetTop;
+        //     context.beginPath();
+        //     context.moveTo(mouseX,mouseY);
+        //     draw(mouseX,mouseY);
+        //     dragging = true;
+        // });
+        // $('#canvas').mousemove(function(e){
+        //     if(dragging){
+        //         let mouseX = e.pageX - this.offsetLeft;
+        //         let mouseY = e.pageY - this.offsetTop;
+        //         draw(mouseX,mouseY);
+        //     }
+        // });
+        // $('#canvas').mouseup(function(e){
+        //     dragging = false;
+        // });
+        // $('#canvas').mouseleave(function(e){
+        //     dragging = false;
+        // });
     
-        function draw(x,y){
-            context.lineTo(x,y);
-            context.moveTo(x,y);
-            context.closePath();
-            context.stroke();
-        }
+        // function draw(x,y){
+        //     context.lineTo(x,y);
+        //     context.moveTo(x,y);
+        //     context.closePath();
+        //     context.stroke();
+        // }
+        var ctx = tempcanvas.getContext('2d'),
+    mainctx = canvas.getContext('2d'),
+    w = canvas.width,
+    h = canvas.height,
+    x1,
+    y1,
+    isDown = false;
+
+ctx.translate(0.5, 0.5);
+
+tempcanvas.onmousedown = function(e) {
+    var rect = canvas.getBoundingClientRect();
+    x1 = e.clientX - rect.left;
+    y1 = e.clientY - rect.top;
+    isDown = true;
+}
+tempcanvas.onmouseup = function() {
+    isDown = false;
+    mainctx.drawImage(tempcanvas, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+}
+tempcanvas.onmousemove = function(e) {
+
+    if (!isDown) return;
+    
+    var rect = canvas.getBoundingClientRect(),
+        x2 = e.clientX - rect.left,
+        y2 = e.clientY - rect.top;
+    
+    ctx.clearRect(0, 0, w, h);
+    drawEllipse(x1, y1, x2, y2);
+
+    ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+    // ctx.strokeRect(x1, y1, x2-x1, y2-y1);
+}
+
+function drawEllipse(x1, y1, x2, y2) {
+    var radiusX = (x2 - x1) * 0.5,
+        radiusY = (y2 - y1) * 0.5,
+        centerX = x1 + radiusX,
+        centerY = y1 + radiusY,
+        step = 0.01,
+        a = step,
+        pi2 = Math.PI * 2 - step;
+    
+    ctx.beginPath();
+    ctx.moveTo(centerX + radiusX * Math.cos(0),
+               centerY + radiusY * Math.sin(0));
+
+    for(; a < pi2; a += step) {
+        ctx.lineTo(centerX + radiusX * Math.cos(a),
+                   centerY + radiusY * Math.sin(a));
+    }
+    
+    ctx.closePath();
+    ctx.strokeStyle = '#000';
+    ctx.stroke();
+}
     </script>
 </body>
 </html>

@@ -12,14 +12,16 @@
 <body>
     <!-- CANVAS -->
     <div id="canvas-container">
-        <canvas id="canvas-real" class="canvas" width='800px' height='600px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-draft" class="canvas" width='800px' height='600px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='800px' height='550px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='550px'>Your browser does not support Canvas</canvas>
     </div>
 
     <!-- CONTROLS -->
     <div class="buttons">
         <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
+        <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
     </div>
 
     <!-- LIBRARIES -->
@@ -30,16 +32,27 @@
     <script src="resources/js/canvas-common.js"></script>
     <script src="resources/js/drawing-line.js"></script>
     <script src="resources/js/drawing-rectangle.js"></script>
+    <script src="resources/js/eraser.js"></script>
+    <script src="resources/js/drawing-ellipse.js"></script>
 
     <!-- UI FUNCTIONS -->
     <script type='text/javascript'>
         $('#drawing-rectangle').click(()=>{
             currentFunction = new DrawingRectangle(contextReal,contextDraft);
         });
+
         $('#drawing-line').click(()=>{
             currentFunction = new DrawingLine(contextReal,contextDraft);
         });
-        currentFunction = new DrawingRectangle(contextReal,contextDraft);    
+
+        $('#eraser').click(()=>{
+            currentFunction = new Eraser(contextReal,contextDraft);
+        });
+
+        $('#drawing-ellipse').click(()=>{
+            currentFunction = new DrawingEllipse(contextReal,contextDraft);
+        });
+        
     </script>
 
 </body>
