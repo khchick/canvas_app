@@ -4,7 +4,8 @@
     top:0px;
     bottom:0px;
     left:0px;
-    right:0px
+    right:0px;
+    background-color: transparent;
 }
 
 #canvas-draft{
@@ -12,7 +13,16 @@
 }
 body{
     overflow:hidden;
+    margin: 10px;
+    font: 16px Helvetica;
 }
 #canvas-container{
-    height:550px;
+    height:500px;
 }  
+
+#background {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+}

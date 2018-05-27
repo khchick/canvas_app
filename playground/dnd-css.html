@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="../resources/css/style.css" rel="stylesheet" type='text/css'>
+    <title>Canvas app template</title>
+</head>
+<body>
+    <!-- CANVAS -->
+    <div id="canvas-container">
+        <canvas id="canvas-real" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="buttons">
+        <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-free" >Drawing Free</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
+        <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
+    </div>
+
+    <!-- IMAGE UPLOAD UI -->
+    <form class="box" method="post" action="" enctype="multipart/form-data">
+        <div class="box__input">
+          <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+          <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+          <button class="box__button" type="submit">Upload</button>
+        </div>
+        <div class="box__uploading">Uploading&hellip;</div>
+        <div class="box__success">Done!</div>
+        <div class="box__error">Error! <span></span>.</div>
+      </form>
+
+
+    <!-- LIBRARIES -->
+    <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+       
+    <!-- FUNCTION CLASSES -->
+    <script src="resources/js/canvas-common.js"></script>
+    <script src="resources/js/drawing-free.js"></script>
+    <script src="resources/js/drawing-line.js"></script>
+    <script src="resources/js/drawing-rectangle.js"></script>
+    <script src="resources/js/eraser.js"></script>
+    <script src="resources/js/drawing-ellipse.js"></script>
+    <script src="resources/js/drawing-dot.js"></script>
+    <!-- <script src="resources/js/background-drop.js"></script> -->
+    <script src="resources/js/background-upload.js"></script>
+
+    <!-- UI FUNCTIONS -->
+    <script type='text/javascript'>
+        $('#drawing-rectangle').click(()=>{
+            currentFunction = new DrawingRectangle(contextReal,contextDraft);
+        });
+
+        $('#drawing-free').click(()=>{
+            currentFunction = new DrawingFree(contextReal,contextDraft);
+        });
+
+        $('#drawing-line').click(()=>{
+            currentFunction = new DrawingLine(contextReal,contextDraft);
+        });
+
+        $('#eraser').click(()=>{
+            currentFunction = new Eraser(contextReal,contextDraft);
+        });
+
+        $('#drawing-ellipse').click(()=>{
+            currentFunction = new DrawingEllipse(contextReal,contextDraft);
+        });
+
+        $('#drawing-dot').click(()=>{
+            currentFunction = new DrawingDot(contextReal,contextDraft);
+            i++;
+        });
+
+        var $form = $('.box');
+
+        if (isAdvancedUpload) {
+
+        var droppedFiles = false;
+
+        $form.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        })
+        .on('dragover dragenter', function() {
+        $form.addClass('is-dragover');
+        })
+        .on('dragleave dragend drop', function() {
+        $form.removeClass('is-dragover');
+        })
+        .on('drop', function(e) {
+        droppedFiles = e.originalEvent.dataTransfer.files;
+        });
+
+        }
+
+        
+
+
+        // FILE UPLOAD USING AJAX
+        // $("input#fileButton").submit(function(e) {
+        //     e.preventDefault();    
+        //     var formData = new FormData(this);
+
+        //     $.ajax({
+        //         url: "https://www.gstatic.com/firebasejs/5.0.4/firebase.js",
+        //         type: 'POST',
+        //         data: formData,
+        //         success: function (data) {
+        //             alert(data)
+        //         },
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false
+        //     });
+        // });
+
+        // var timestamp = Number(new Date());
+        // var storageRef = firebase.storage().ref(timestamp.toString());
+        
+    </script>
+    <!-- INITIALIZE FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyBfglyjJ3OmKTkSEzw-UNeVyIiY5Hfrq7o",
+        authDomain: "canvas-app-69908.firebaseapp.com",
+        databaseURL: "https://canvas-app-69908.firebaseio.com",
+        projectId: "canvas-app-69908",
+        storageBucket: "canvas-app-69908.appspot.com",
+        messagingSenderId: "773196875416"
+      };
+      firebase.initializeApp(config);
+    </script>
+    
+
+</body>
+</html>

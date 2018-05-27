@@ -12,17 +12,34 @@
 <body>
     <!-- CANVAS -->
     <div id="canvas-container">
-        <canvas id="canvas-real" class="canvas" width='800px' height='550px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-draft" class="canvas" width='800px' height='550px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
     </div>
 
     <!-- CONTROLS -->
     <div class="buttons">
         <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-free" >Drawing Free</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
         <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
+        <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
     </div>
+
+    <!-- IMAGE UPLOAD UI -->
+    <div id="page-wrapper">
+
+        <h1>Upload Background Image</h1>
+        <div>
+            Select an image file: 
+            <input type="file" id="fileInput">
+            <button id="opacity">Half opacity</button>
+        </div>
+        <div id="fileDisplayArea"></div>
+    
+    </div>
+
 
     <!-- LIBRARIES -->
     <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
@@ -30,15 +47,22 @@
        
     <!-- FUNCTION CLASSES -->
     <script src="resources/js/canvas-common.js"></script>
+    <script src="resources/js/drawing-free.js"></script>
     <script src="resources/js/drawing-line.js"></script>
     <script src="resources/js/drawing-rectangle.js"></script>
     <script src="resources/js/eraser.js"></script>
     <script src="resources/js/drawing-ellipse.js"></script>
+    <script src="resources/js/drawing-dot.js"></script>
+    <script src="resources/js/background-upload.js"></script>
 
     <!-- UI FUNCTIONS -->
     <script type='text/javascript'>
         $('#drawing-rectangle').click(()=>{
             currentFunction = new DrawingRectangle(contextReal,contextDraft);
+        });
+
+        $('#drawing-free').click(()=>{
+            currentFunction = new DrawingFree(contextReal,contextDraft);
         });
 
         $('#drawing-line').click(()=>{
@@ -52,8 +76,52 @@
         $('#drawing-ellipse').click(()=>{
             currentFunction = new DrawingEllipse(contextReal,contextDraft);
         });
+
+        $('#drawing-dot').click(()=>{
+            currentFunction = new DrawingDot(contextReal,contextDraft);
+            i++;
+        });
+        
+        $('#opacity').click(()=>{
+            $('#background').css("opacity","0.5");
+        })
+        
+        // FILE UPLOAD USING AJAX
+        // $("input#fileButton").submit(function(e) {
+        //     e.preventDefault();    
+        //     var formData = new FormData(this);
+
+        //     $.ajax({
+        //         url: "https://www.gstatic.com/firebasejs/5.0.4/firebase.js",
+        //         type: 'POST',
+        //         data: formData,
+        //         success: function (data) {
+        //             alert(data)
+        //         },
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false
+        //     });
+        // });
+
+        // var timestamp = Number(new Date());
+        // var storageRef = firebase.storage().ref(timestamp.toString());
         
     </script>
+    <!-- INITIALIZE FIREBASE -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyBfglyjJ3OmKTkSEzw-UNeVyIiY5Hfrq7o",
+        authDomain: "canvas-app-69908.firebaseapp.com",
+        databaseURL: "https://canvas-app-69908.firebaseio.com",
+        projectId: "canvas-app-69908",
+        storageBucket: "canvas-app-69908.appspot.com",
+        messagingSenderId: "773196875416"
+      };
+      firebase.initializeApp(config);
+    </script> -->
+    
 
 </body>
 </html>

@@ -1,30 +1,35 @@
 class DrawingLine extends PaintFunction{
-    constructor(contextReal){
+    constructor(contextReal,contextDraft){
         super();
-        this.context = contextReal;            
+        this.contextReal = contextReal;
+        this.contextDraft = contextDraft;            
     }
     
     onMouseDown(coord,event){
-        this.context.strokeStyle = "#df4b26";
-        this.context.lineJoin = "round";
-        this.context.lineWidth = 5;
-        this.context.beginPath();
-        this.context.moveTo(coord[0],coord[1]);
-        this.draw(coord[0],coord[1]);
+        this.origX = coord[0];
+        this.origY = coord[1];
     }
     onDragging(coord,event){
-        this.draw(coord[0],coord[1]);
+        this.newX = coord[0];
+        this.newY = coord[1];
+        this.contextDraft.clearRect(0,0,canvasDraft.width,canvasDraft.height);
+        this.draw(this.origX,this.origY,this.newX,this.newY);
     }
 
     onMouseMove(){}
-    onMouseUp(){}
+    onMouseUp(){
+        this.contextReal.drawImage(canvasDraft, 0, 0);
+        this.contextDraft.clearRect(0,0,canvasDraft.width,canvasDraft.height);
+    }
     onMouseLeave(){}
     onMouseEnter(){}
 
-    draw(x,y){
-        this.context.lineTo(x,y);
-        this.context.moveTo(x,y);
-        this.context.closePath();
-        this.context.stroke();    
+    draw(x1,y1,x2,y2){
+        this.contextDraft.strokeStyle = "#df4b26";
+        this.contextDraft.lineWidth = 5;
+        this.contextDraft.beginPath();
+        this.contextDraft.moveTo(x1,y1);
+        this.contextDraft.lineTo(x2,y2);
+        this.contextDraft.stroke();    
     }
 }

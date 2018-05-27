@@ -15,23 +15,23 @@ class DrawingEllipse extends PaintFunction{
     }
 
     onDragging(coord,event){
-        var w = canvasReal.width;
-        var h = canvasReal.height; 
-        var rect = canvasReal.getBoundingClientRect();
+        // var w = canvasReal.width;
+        // var h = canvasReal.height; 
+        // var rect = canvasReal.getBoundingClientRect();
         this.newX = coord[0];
         this.newY = coord[1];
 
-        this.contextDraft.clearRect(0, 0, w, h); 
+        this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height); 
         this.drawEllipse(this.origX,this.origY,this.newX,this.newY);
         this.contextDraft.strokeStyle = 'rgba(255, 0, 0, 0.5)';
     }
 
     onMouseMove(){}
     onMouseUp(){
-        var w = canvasReal.width;
-        var h = canvasReal.height; 
+        // var w = canvasReal.width;
+        // var h = canvasReal.height; 
         this.contextReal.drawImage(canvasDraft, 0, 0);
-        this.contextDraft.clearRect(0, 0, w, h);
+        this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height);
     }
     onMouseLeave(){}
     onMouseEnter(){}
