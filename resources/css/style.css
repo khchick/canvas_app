@@ -20,8 +20,15 @@ body{
     height:400px;
 }  
 
-#background {
+#bg-img {
     z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#background {
+    z-index: -2;
     position: fixed;
     top: 0;
     left: 0;

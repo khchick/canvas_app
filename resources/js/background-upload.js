@@ -29,12 +29,12 @@ window.onload = function() {
 
 }
 
-var MAX_HEIGHT = 500;
-var MAX_WIDTH = 800;
+var MAX_HEIGHT = canvasReal.height;
+var MAX_WIDTH = canvasReal.width;
 function render(src){
 	var image = new Image();
 	image.onload = function(){
-		var canvas = document.getElementById("background");
+		var canvas = document.getElementById("bg-img");
 		if(image.height > MAX_HEIGHT) {
 			image.width *= MAX_HEIGHT / image.height;
 			image.height = MAX_HEIGHT;
@@ -51,3 +51,4 @@ function render(src){
 	};
 	image.src = src;
 }
+

@@ -13,6 +13,9 @@ var config = {
     changeBgCol: function(jscolor) {
         config.bgCol = `#${jscolor}`;
         $('#background').css("background-color",config.bgCol);
+        // config.history.snapshot[config.history.action] = new Image();
+        // config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+        // config.history.action++;
     },
 
     // UNDO / REDO

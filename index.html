@@ -15,6 +15,7 @@
     <div id="canvas-container">
         <canvas id="canvas-real" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <canvas id="canvas-draft" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="bg-img" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <canvas id="background" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <!-- <canvas id="playground" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas> -->
     </div>
@@ -56,6 +57,7 @@
             Select an image file: 
             <input type="file" id="fileInput">
             <button id="opacity">Half opacity</button>
+            <button id="rm-bg">Remove background</button>
         </div>
         <div id="fileDisplayArea"></div>
     
@@ -124,6 +126,10 @@
             config.history.action++;
         });
 
+        $('#rm-bg').click(()=>{
+            contextBG.clearRect(0, 0, canvasBG.width, canvasBG.height);
+        });
+
         // COLOR MANAGEMENT
         $('#background').css("background-color",config.bgCol);
 
@@ -135,7 +141,7 @@
         // SUPPORTING TOOL
         
         $('#opacity').click(()=>{
-            $('#background').css("opacity","0.5");
+            $('#bg-img').css("opacity","0.5");
         });
 
         // UNDO / REDO
