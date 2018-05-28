@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #blank {
+            width: 800px;
+            height: 500px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+     <!-- CANVAS -->
+     <div id="canvas-container">
+        <canvas id="canvas-real" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="buttons">
+        <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
+    </div>
+    <div>
+        <button id="clear">Clear Canvas</button>
+        <button id="undo">Undo</button>
+        <button id="redo">Redo</button>
+    </div>
+    
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../resources/js/canvas-common.js"></script>
+<script src="../resources/js/drawing-rectangle.js"></script>
+<script type='text/javascript'>
+
+    $('#drawing-rectangle').click(()=>{
+        currentFunction = new DrawingRectangle(contextReal,contextDraft);
+    });
+
+    $('undo').click(()=>{
+        cUndo();
+    });
+
+    $('redo').click(()=>{
+        cRedo();
+    });
+
+    var ctx = document.getElementById('blank').getContext("2d");    
+</script>
+</html>
+

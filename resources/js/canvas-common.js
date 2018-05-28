@@ -10,6 +10,7 @@ $('#canvas-draft').mousedown(function(e){
     let mouseY = e.pageY - this.offsetTop;
     currentFunction.onMouseDown([mouseX,mouseY],e);
     dragging = true;
+    // cPush();
 });
 
 $('#canvas-draft').mousemove(function(e){
@@ -26,6 +27,7 @@ $('#canvas-draft').mouseup(function(e){
     let mouseX = e.pageX - this.offsetLeft;
     let mouseY = e.pageY - this.offsetTop;
     currentFunction.onMouseUp([mouseX,mouseY],e);
+        // cPush();
 });
 
 $('#canvas-draft').mouseleave(function(e){
@@ -50,3 +52,33 @@ class PaintFunction{
     onMouseLeave(){}
     onMouseEnter(){}
 }    
+
+// var history = {
+//     redo_list: [],
+//     undo_list: [],
+//     saveState: function(canvasReal, list, keep_redo) {
+//       keep_redo = keep_redo || false;
+//       if(!keep_redo) {
+//         this.redo_list = [];
+//       }
+      
+//       (list || this.undo_list).push(canvasReal.toDataURL());   
+//     },
+//     undo: function(canvasReal, contextReal) {
+//       this.restoreState(canvasReal, contextReal, this.undo_list, this.redo_list);
+//     },
+//     redo: function(canvasReal, contextReal) {
+//       this.restoreState(canvasReal, contextReal, this.redo_list, this.undo_list);
+//     },
+//     restoreState: function(canvasReal, contextReal,  pop, push) {
+//       if(pop.length) {
+//         this.saveState(canvasReal, push, true);
+//         var restore_state = pop.pop();
+//         var img = new Element('img', {'src':restore_state});
+//         img.onload = function() {
+//             contextReal.clearRect(0, 0, 800, 500);
+//             contextReal.drawImage(img, 0, 0, 800, 500, 0, 0, 600, 400);  
+//         }
+//       }
+//     }
+//   }

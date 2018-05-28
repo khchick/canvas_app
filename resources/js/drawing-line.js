@@ -12,6 +12,8 @@ class DrawingLine extends PaintFunction{
     onDragging(coord,event){
         this.newX = coord[0];
         this.newY = coord[1];
+        this.contextDraft.strokeStyle = "red";
+        this.contextDraft.lineWidth = 5;
         this.contextDraft.clearRect(0,0,canvasDraft.width,canvasDraft.height);
         this.draw(this.origX,this.origY,this.newX,this.newY);
     }
@@ -25,8 +27,8 @@ class DrawingLine extends PaintFunction{
     onMouseEnter(){}
 
     draw(x1,y1,x2,y2){
-        this.contextDraft.strokeStyle = "#df4b26";
-        this.contextDraft.lineWidth = 5;
+        // this.contextDraft.strokeStyle = "red";
+        // this.contextDraft.lineWidth = 5;
         this.contextDraft.beginPath();
         this.contextDraft.moveTo(x1,y1);
         this.contextDraft.lineTo(x2,y2);

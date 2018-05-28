@@ -8,13 +8,13 @@ class DrawingEllipse extends PaintFunction{
         // this.contextDraft.translate(0.5, 0.5);
     }
 
-    onMouseDown(coord,event){
+    onMouseDown(coord){
         // var rect = canvasReal.getBoundingClientRect();
         this.origX = coord[0];
         this.origY = coord[1];
     }
 
-    onDragging(coord,event){
+    onDragging(coord){
         // var w = canvasReal.width;
         // var h = canvasReal.height; 
         // var rect = canvasReal.getBoundingClientRect();
@@ -23,7 +23,7 @@ class DrawingEllipse extends PaintFunction{
 
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height); 
         this.drawEllipse(this.origX,this.origY,this.newX,this.newY);
-        this.contextDraft.strokeStyle = 'rgba(255, 0, 0, 0.5)';
+        // this.contextDraft.strokeStyle = 'rgba(255, 0, 0, 0.5)';
     }
 
     onMouseMove(){}
@@ -53,7 +53,10 @@ class DrawingEllipse extends PaintFunction{
         }
         
         this.contextDraft.closePath();
-        this.contextDraft.strokeStyle = '#000';
+        this.contextDraft.strokeStyle = 'orange';
+        this.contextDraft.lineWidth = 5;
+        this.contextDraft.fillStyle = 'orange';
+        this.contextDraft.fill();
         this.contextDraft.stroke();
     }
     

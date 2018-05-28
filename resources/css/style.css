@@ -26,3 +26,11 @@ body{
     top: 0;
     left: 0;
 }
+
+#playground {
+    z-index: -2;
+    position: absolute;
+    top: 0;
+    left: 800px;
+    background-color: lightgray;
+}

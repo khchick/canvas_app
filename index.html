@@ -10,14 +10,16 @@
     <title>Canvas app template</title>
 </head>
 <body>
+    
     <!-- CANVAS -->
     <div id="canvas-container">
         <canvas id="canvas-real" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
         <canvas id="canvas-draft" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
         <canvas id="background" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <!-- <canvas id="playground" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas> -->
     </div>
 
-    <!-- CONTROLS -->
+        <!-- CONTROLS -->
     <div class="buttons">
         <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-free" >Drawing Free</span>
@@ -25,6 +27,13 @@
         <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
         <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
+    </div>
+    <div>
+        <button id="clear">Clear Canvas</button>
+        <button id="undo">Undo</button>
+        <button id="redo">Redo</button>
+        <button id="color">Color Picker</button>
+        <img src="" alt="">
     </div>
 
     <!-- IMAGE UPLOAD UI -->
@@ -40,7 +49,6 @@
     
     </div>
 
-
     <!-- LIBRARIES -->
     <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -54,9 +62,13 @@
     <script src="resources/js/drawing-ellipse.js"></script>
     <script src="resources/js/drawing-dot.js"></script>
     <script src="resources/js/background-upload.js"></script>
+    <!-- <script src="resources/js/undo-redo.js"></script> -->
 
     <!-- UI FUNCTIONS -->
     <script type='text/javascript'>
+
+        // PAINT FUNCTIONS
+
         $('#drawing-rectangle').click(()=>{
             currentFunction = new DrawingRectangle(contextReal,contextDraft);
         });
@@ -81,10 +93,70 @@
             currentFunction = new DrawingDot(contextReal,contextDraft);
             i++;
         });
+
+        // CLEAR CANVAS
+
+        clearCanvas = () => {
+            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
+        }
+        $('#clear').click(()=>{
+            clearCanvas();
+        });
+
+        // SUPPORTING TOOL
         
         $('#opacity').click(()=>{
             $('#background').css("opacity","0.5");
-        })
+        });
+
+        // UNDO / REDO
+
+        // var ctx;
+        // ctx = document.getElementById('canvas-real').getContext("2d");
+
+        // var cPushArray = new Array();
+        // var cStep = -1;
+
+        // function drawImage() {
+        //     var image = new Image();
+        //     image.src = 'https://www.dropbox.com/s/5bdvcgteryjg595/snapshot.jpg';
+        //     $(image).on('load',function () {
+        //         ctx.drawImage(image, 0, 0, 800, 500);
+        //         cPush();
+        //     });    
+        // }
+
+        // function cPush() {
+        //     cStep++;
+        //     if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+        //     cPushArray.push(document.getElementById('canvas-real').toDataURL());
+        // }
+        // function cUndo() {
+        //     if (cStep > 0) {
+        //         cStep--;
+        //         var canvasPic = new Image();
+        //         canvasPic.src = cPushArray[cStep];
+        //         canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
+        //     }
+        // }
+        // function cRedo() {
+        //     if (cStep < cPushArray.length-1) {
+        //         cStep++;
+        //         var canvasPic = new Image();
+        //         canvasPic.src = cPushArray[cStep];
+        //         canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
+        //     }
+        // }
+
+        // drawImage();
+
+        // $('#undo').on('click', function() {
+        //     history.undo(canvasReal, contextReal);
+        // });
+    
+        // $('#redo').on('click', function() {
+        //     history.redo(canvasReal, contextReal);
+        // });
         
         // FILE UPLOAD USING AJAX
         // $("input#fileButton").submit(function(e) {

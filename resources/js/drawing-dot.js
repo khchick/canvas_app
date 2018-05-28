@@ -13,7 +13,6 @@ class DrawingDot extends PaintFunction{
         this.newY = this.origY + 10
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height); 
         this.drawEllipse(this.origX,this.origY,this.newX,this.newY);
-        this.contextDraft.strokeStyle = 'rgba(255, 0, 0, 0.5)';
         this.contextDraft.fill();
         var i = this.numInstances;
         this.contextDraft.fillText(i,this.newX + 5,this.newY + 5);
@@ -46,8 +45,8 @@ class DrawingDot extends PaintFunction{
         }
         
         this.contextDraft.closePath();
-        this.contextDraft.strokeStyle = '#000';
-        this.contextDraft.stroke();
+        this.contextDraft.fillStyle = 'black';
+        this.contextDraft.fill();
     }
     
 }
