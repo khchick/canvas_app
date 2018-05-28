@@ -10,7 +10,6 @@ $('#canvas-draft').mousedown(function(e){
     let mouseY = e.pageY - this.offsetTop;
     currentFunction.onMouseDown([mouseX,mouseY],e);
     dragging = true;
-    // cPush();
 });
 
 $('#canvas-draft').mousemove(function(e){
@@ -27,7 +26,6 @@ $('#canvas-draft').mouseup(function(e){
     let mouseX = e.pageX - this.offsetLeft;
     let mouseY = e.pageY - this.offsetTop;
     currentFunction.onMouseUp([mouseX,mouseY],e);
-        // cPush();
 });
 
 $('#canvas-draft').mouseleave(function(e){
@@ -51,6 +49,7 @@ class PaintFunction{
     onMouseUp(){}
     onMouseLeave(){}
     onMouseEnter(){}
+    onFinish(){}
 }    
 
 // var history = {

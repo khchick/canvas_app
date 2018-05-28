@@ -9,8 +9,8 @@ class DrawingDot extends PaintFunction{
     onMouseDown(coord,event){
         this.origX = coord[0] - 7.5;
         this.origY = coord[1] - 7.5;
-        this.newX = this.origX + 10
-        this.newY = this.origY + 10
+        this.newX = this.origX + 10;
+        this.newY = this.origY + 10;
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height); 
         this.drawEllipse(this.origX,this.origY,this.newX,this.newY);
         this.contextDraft.fill();
@@ -24,9 +24,16 @@ class DrawingDot extends PaintFunction{
     onMouseUp(){
         this.contextReal.drawImage(canvasDraft, 0, 0);
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height);
+        this.onFinish();
     }
     onMouseLeave(){}
     onMouseEnter(){}
+
+    onFinish(){
+        config.history.snapshot[config.history.action] = new Image();
+        config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+        config.history.action++;
+    }
 
     drawEllipse(x1, y1, x2, y2) {
         var radiusX = (x2 - x1) * 0.5,
@@ -45,8 +52,12 @@ class DrawingDot extends PaintFunction{
         }
         
         this.contextDraft.closePath();
-        this.contextDraft.fillStyle = 'black';
+        this.contextDraft.lineJoin = "round";
+        this.contextDraft.lineWidth = 0;
+        this.contextDraft.strokeStyle = config.strokeCol;
+        this.contextDraft.fillStyle = config.strokeCol;
         this.contextDraft.fill();
+        // this.contextDraft.stroke();
     }
     
 }

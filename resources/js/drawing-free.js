@@ -5,7 +5,7 @@ class DrawingFree extends PaintFunction{
     }
     
     onMouseDown(coord,event){
-        this.context.strokeStyle = "blue";
+        this.context.strokeStyle = config.strokeCol;
         this.context.lineJoin = "round";
         this.context.lineWidth = 5;
         this.context.beginPath();
@@ -17,9 +17,18 @@ class DrawingFree extends PaintFunction{
     }
 
     onMouseMove(){}
-    onMouseUp(){}
+    onMouseUp(){
+        this.onFinish();
+    }
+
     onMouseLeave(){}
     onMouseEnter(){}
+
+    onFinish(){
+        config.history.snapshot[config.history.action] = new Image();
+        config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+        config.history.action++;
+    }
 
     draw(x,y){
         this.context.lineTo(x,y);

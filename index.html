@@ -13,28 +13,40 @@
     
     <!-- CANVAS -->
     <div id="canvas-container">
-        <canvas id="canvas-real" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-draft" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
-        <canvas id="background" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <!-- <canvas id="playground" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas> -->
     </div>
 
-        <!-- CONTROLS -->
-    <div class="buttons">
-        <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
-        <span class="btn btn-info fa fa-paint-brush" id="drawing-free" >Drawing Free</span>
-        <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
-        <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
-        <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
-        <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
-    </div>
-    <div>
-        <button id="clear">Clear Canvas</button>
-        <button id="undo">Undo</button>
-        <button id="redo">Redo</button>
-        <button id="color">Color Picker</button>
-        <img src="" alt="">
-    </div>
+    <!-- CONTROL PANEL -->
+
+        <!-- PAINT FUNCTIONS     -->
+        <div class="buttons">
+            <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Drawing Rectangle</span>
+            <span class="btn btn-info fa fa-paint-brush" id="drawing-free" >Drawing Free</span>
+            <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
+            <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
+            <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
+            <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
+        </div>
+
+        <!-- COLORING TOOL -->
+        <div id="colorPicker">
+            <label for="strokeCol">Stroke Color</label>
+            <input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input>
+            <label for="fillCol">Fill Color</label>
+            <input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input>
+            <label for="bgCol">Background Color</label>
+            <input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input>
+        </div>
+        
+        <!-- FLOW CONTROL -->
+        <div>
+            <button id="clear">Clear Canvas</button>
+            <button id="undo">Undo</button>
+            <button id="redo">Redo</button>
+        </div>
 
     <!-- IMAGE UPLOAD UI -->
     <div id="page-wrapper">
@@ -54,6 +66,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
        
     <!-- FUNCTION CLASSES -->
+    <script src="resources/js/config.js"></script>
     <script src="resources/js/canvas-common.js"></script>
     <script src="resources/js/drawing-free.js"></script>
     <script src="resources/js/drawing-line.js"></script>
@@ -62,6 +75,13 @@
     <script src="resources/js/drawing-ellipse.js"></script>
     <script src="resources/js/drawing-dot.js"></script>
     <script src="resources/js/background-upload.js"></script>
+
+
+    <script src="vendors/jscolor/jscolor.js"></script>
+    <script src="resources/js/rgb2hex.js"></script>
+    
+    <!-- <script src="vendors/jscolor/jscolor.js"></script> -->
+
     <!-- <script src="resources/js/undo-redo.js"></script> -->
 
     <!-- UI FUNCTIONS -->
@@ -93,15 +113,24 @@
             currentFunction = new DrawingDot(contextReal,contextDraft);
             i++;
         });
-
+       
         // CLEAR CANVAS
 
-        clearCanvas = () => {
-            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
-        }
         $('#clear').click(()=>{
-            clearCanvas();
+            // config.history.clear();
+            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
         });
+
+        // COLOR MANAGEMENT
+        $('#background').css("background-color",config.bgCol);
+
+        // $('#bgCol').change(()=>{
+        //     config.changeBgCol(this.jscolor);
+        //     $('#background').css("background-color",config.bgCol);
+        // })
 
         // SUPPORTING TOOL
         
@@ -110,53 +139,19 @@
         });
 
         // UNDO / REDO
+        
+            // CREATE 1ST SNAPSHOT
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
 
-        // var ctx;
-        // ctx = document.getElementById('canvas-real').getContext("2d");
+            $('#undo').click(()=>{
+                config.history.undo();
+            })
 
-        // var cPushArray = new Array();
-        // var cStep = -1;
-
-        // function drawImage() {
-        //     var image = new Image();
-        //     image.src = 'https://www.dropbox.com/s/5bdvcgteryjg595/snapshot.jpg';
-        //     $(image).on('load',function () {
-        //         ctx.drawImage(image, 0, 0, 800, 500);
-        //         cPush();
-        //     });    
-        // }
-
-        // function cPush() {
-        //     cStep++;
-        //     if (cStep < cPushArray.length) { cPushArray.length = cStep; }
-        //     cPushArray.push(document.getElementById('canvas-real').toDataURL());
-        // }
-        // function cUndo() {
-        //     if (cStep > 0) {
-        //         cStep--;
-        //         var canvasPic = new Image();
-        //         canvasPic.src = cPushArray[cStep];
-        //         canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
-        //     }
-        // }
-        // function cRedo() {
-        //     if (cStep < cPushArray.length-1) {
-        //         cStep++;
-        //         var canvasPic = new Image();
-        //         canvasPic.src = cPushArray[cStep];
-        //         canvasPic.onload = function () { ctx.drawImage(canvasPic, 0, 0); }
-        //     }
-        // }
-
-        // drawImage();
-
-        // $('#undo').on('click', function() {
-        //     history.undo(canvasReal, contextReal);
-        // });
-    
-        // $('#redo').on('click', function() {
-        //     history.redo(canvasReal, contextReal);
-        // });
+            $('#redo').click(()=>{
+                config.history.redo();
+            })
         
         // FILE UPLOAD USING AJAX
         // $("input#fileButton").submit(function(e) {

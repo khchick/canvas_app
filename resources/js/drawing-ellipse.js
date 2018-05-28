@@ -32,9 +32,16 @@ class DrawingEllipse extends PaintFunction{
         // var h = canvasReal.height; 
         this.contextReal.drawImage(canvasDraft, 0, 0);
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height);
+        this.onFinish();
     }
     onMouseLeave(){}
     onMouseEnter(){}
+
+    onFinish(){
+        config.history.snapshot[config.history.action] = new Image();
+        config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+        config.history.action++;
+    }
 
     drawEllipse(x1, y1, x2, y2) {
         var radiusX = (x2 - x1) * 0.5,
@@ -53,9 +60,9 @@ class DrawingEllipse extends PaintFunction{
         }
         
         this.contextDraft.closePath();
-        this.contextDraft.strokeStyle = 'orange';
         this.contextDraft.lineWidth = 5;
-        this.contextDraft.fillStyle = 'orange';
+        this.contextDraft.strokeStyle = config.strokeCol;
+        this.contextDraft.fillStyle = config.fillCol;
         this.contextDraft.fill();
         this.contextDraft.stroke();
     }

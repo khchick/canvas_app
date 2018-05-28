@@ -5,9 +5,9 @@ class Eraser extends PaintFunction{
     }
     
     onMouseDown(coord,event){
-        this.context.strokeStyle = "#000";
+        // this.context.strokeStyle = "#000";
         this.context.lineJoin = "round";
-        this.context.lineWidth = 15;
+        this.context.lineWidth = 10;
         this.context.beginPath();
         this.context.moveTo(coord[0],coord[1]);
         this.draw(coord[0],coord[1]);
@@ -19,9 +19,17 @@ class Eraser extends PaintFunction{
     }
 
     onMouseMove(){}
-    onMouseUp(){}
+    onMouseUp(){
+        this.onFinish();
+    }
     onMouseLeave(){}
     onMouseEnter(){}
+
+    onFinish(){
+        config.history.snapshot[config.history.action] = new Image();
+        config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+        config.history.action++;
+    }
 
     draw(x,y){
         this.context.lineTo(x,y);
