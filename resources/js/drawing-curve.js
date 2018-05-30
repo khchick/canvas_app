@@ -10,10 +10,10 @@ class DrawingQuadraticCurve extends PaintFunction{
             if (this.actionCounter === 0){
                 this.contextReal.lineCap = "round"; //lineCap = "butt" or "round"
                 this.contextDraft.lineCap = "round"; //lineCap = "butt" or "round"
-                this.contextReal.strokeStyle = canvasSettings.colorStroke; //canvas-configuration.js
-                this.contextDraft.strokeStyle = canvasSettings.colorStroke; //canvas-configuration.js
-                this.contextReal.lineWidth = canvasSettings.brushSize; //canvas-configuration.js
-                this.contextDraft.lineWidth = canvasSettings.brushSize; //canvas-configuration.js
+                this.contextReal.strokeStyle = config.strokeCol; //canvas-configuration.js
+                this.contextDraft.strokeStyle = config.strokeCol; //canvas-configuration.js
+                // this.contextReal.lineWidth = canvasSettings.brushSize; //canvas-configuration.js
+                // this.contextDraft.lineWidth = canvasSettings.brushSize; //canvas-configuration.js
                 this.origX = coord[0];
                 this.origY = coord[1];
                 this.contextReal.beginPath();
@@ -52,8 +52,8 @@ class DrawingQuadraticCurve extends PaintFunction{
             }
         }
         onFinish(){
-            canvasSettings.undoObject.states[canvasSettings.undoObject.actionCount] = new Image();
-            canvasSettings.undoObject.states[canvasSettings.undoObject.actionCount].src = canvasReal.toDataURL();
-            canvasSettings.undoObject.actionCount++;
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
         }
 }

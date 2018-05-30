@@ -4,12 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- OG MARKUP FOR FB SHARING -->
+    <meta property="og:url"                content="https://khchick.com" />
+    <meta property="og:type"               content="game" />
+    <meta property="og:title"              content="JOIN & SHARE" />
+    <meta property="og:description"        content="Come and see what I've created using this app! You can share your own too!" />
+    <meta property="og:image"              content="" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="resources/css/style.css" rel="stylesheet" type='text/css'>
-    <title>Canvas app template</title>
+    <title>JOIN & SHARE</title>
 </head>
 <body>
+    <!-- FB Javascript SDK -->
+    <!-- <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId            : '269791440228761',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v3.0'
+            });
+        };
+        
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+    </script> -->
     
     <!-- CANVAS -->
     <div id="canvas-container">
@@ -17,7 +42,6 @@
         <canvas id="canvas-draft" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <canvas id="bg-img" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
         <canvas id="background" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-        <!-- <canvas id="playground" class="canvas" width='800px' height='500px'>Your browser does not support Canvas</canvas> -->
     </div>
 
     <!-- CONTROL PANEL -->
@@ -29,6 +53,7 @@
             <span class="btn btn-info fa fa-paint-brush" id="drawing-line" >Drawing Line</span>
             <span class="btn btn-info fa fa-paint-brush" id="eraser" >Eraser</span>
             <span class="btn btn-info fa fa-paint-brush" id="drawing-ellipse" >Drawing Ellipse</span>
+            <span class="btn btn-info fa fa-paint-brush" id="drawing-curve" >Drawing Curve</span>
             <span class="btn btn-info fa fa-paint-brush" id="drawing-dot" >Drawing Dot</span>
         </div>
 
@@ -49,10 +74,10 @@
             <button id="redo">Redo</button>
         </div>
 
-    <!-- IMAGE UPLOAD UI -->
+    <!-- BACKGROUND IMAGE UPLOAD UI -->
     <div id="page-wrapper">
 
-        <h1>Upload Background Image</h1>
+        <h3>Upload Background Image</h3>
         <div>
             Select an image file: 
             <input type="file" id="fileInput">
@@ -63,11 +88,38 @@
     
     </div>
 
+    <!-- POST CANVAS IMAGE TO FB -->
+   <button id="post2FB">
+       Post image to FB (deprecated)
+    </button>
+    
+    <!-- SHARE THIS APP -->
+    <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+
+    <!-- FILE UPLOAD TO FIREBASE -->
+
+    
+    
+    
+    <!-- INITIALIZE FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        var config = {
+        apiKey: "AIzaSyBfglyjJ3OmKTkSEzw-UNeVyIiY5Hfrq7o",
+        authDomain: "canvas-app-69908.firebaseapp.com",
+        databaseURL: "https://canvas-app-69908.firebaseio.com",
+        projectId: "canvas-app-69908",
+        storageBucket: "canvas-app-69908.appspot.com",
+        messagingSenderId: "773196875416"
+        };
+        firebase.initializeApp(config);
+    </script>
+    
     <!-- LIBRARIES -->
     <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
        
-    <!-- FUNCTION CLASSES -->
+    <!-- FUNCTIONS -->
     <script src="resources/js/config.js"></script>
     <script src="resources/js/canvas-common.js"></script>
     <script src="resources/js/drawing-free.js"></script>
@@ -76,15 +128,10 @@
     <script src="resources/js/eraser.js"></script>
     <script src="resources/js/drawing-ellipse.js"></script>
     <script src="resources/js/drawing-dot.js"></script>
+    <script src="resources/js/drawing-curve.js"></script>
     <script src="resources/js/background-upload.js"></script>
-
-
     <script src="vendors/jscolor/jscolor.js"></script>
-    <script src="resources/js/rgb2hex.js"></script>
-    
-    <!-- <script src="vendors/jscolor/jscolor.js"></script> -->
-
-    <!-- <script src="resources/js/undo-redo.js"></script> -->
+    <script src="resources/js/post2FB.js"></script>
 
     <!-- UI FUNCTIONS -->
     <script type='text/javascript'>
@@ -115,6 +162,11 @@
             currentFunction = new DrawingDot(contextReal,contextDraft);
             i++;
         });
+        
+        $('#drawing-curve').click(()=>{
+            currentFunction = new DrawingQuadraticCurve(contextReal,contextDraft);
+        });
+        
        
         // CLEAR CANVAS
 
@@ -131,12 +183,8 @@
         });
 
         // COLOR MANAGEMENT
-        $('#background').css("background-color",config.bgCol);
 
-        // $('#bgCol').change(()=>{
-        //     config.changeBgCol(this.jscolor);
-        //     $('#background').css("background-color",config.bgCol);
-        // })
+        $('#background').css("background-color",config.bgCol);
 
         // SUPPORTING TOOL
         
@@ -181,19 +229,7 @@
         // var storageRef = firebase.storage().ref(timestamp.toString());
         
     </script>
-    <!-- INITIALIZE FIREBASE -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
-    <script>
-      var config = {
-        apiKey: "AIzaSyBfglyjJ3OmKTkSEzw-UNeVyIiY5Hfrq7o",
-        authDomain: "canvas-app-69908.firebaseapp.com",
-        databaseURL: "https://canvas-app-69908.firebaseio.com",
-        projectId: "canvas-app-69908",
-        storageBucket: "canvas-app-69908.appspot.com",
-        messagingSenderId: "773196875416"
-      };
-      firebase.initializeApp(config);
-    </script> -->
+
     
 
 </body>
