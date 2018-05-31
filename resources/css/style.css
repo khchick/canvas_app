@@ -8,6 +8,10 @@
     background-color: transparent;
 }
 
+#canvas-combined {
+    display: none;
+}
+
 #canvas-draft{
     background-color: transparent;
 }
@@ -34,10 +38,39 @@ body{
     left: 0;
 }
 
-#playground {
+#paintFunctions {
+    background-color: #96b0e0;
+}
+
+#colorPicker {
+    background-color: #96b0e0;
+}
+
+#bgUpload {
+    background-color: #96b0e0;
+}
+
+#flowControl {
+    background-color: #fdec9f;
+}
+
+#interAct {
+    background-color: #79b881;
+}
+
+/* #playground {
     z-index: -2;
     position: absolute;
     top: 0;
     left: 800px;
     background-color: lightgray;
+} */
+
+#dialog-form,
+#dialog-message,
+#dialog-form-puzzle,
+#dialog-message-puzzle {
+    display: none;
 }
+
+
