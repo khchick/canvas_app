@@ -91,6 +91,7 @@
         <button id="clear">Clear Canvas</button>
         <button id="undo">Undo</button>
         <button id="redo">Redo</button>
+        <a id="download" download="my-canvas.png"><button type="button" onClick="download()">Download</button></a>
     </div>
 
     <!-- INTERACTIVITY -->
@@ -166,7 +167,6 @@
     <script src="resources/js/drawing-curve.js"></script>
     <script src="resources/js/background-upload.js"></script>
     <script src="vendors/jscolor/jscolor.js"></script>
-    <script src="resources/js/post2FB.js"></script>
     <script src="resources/js/upload-share-download.js"></script>
 
     <!-- UI FUNCTIONS -->
@@ -203,16 +203,7 @@
             currentFunction = new DrawingQuadraticCurve(contextReal,contextDraft);
         });
         
-       
-        // CLEAR CANVAS
-
-        $('#clear').click(()=>{
-            // config.history.clear();
-            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
-            config.history.snapshot[config.history.action] = new Image();
-            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
-            config.history.action++;
-        });
+        // REMOVE BACKGROUND IMAGE
 
         $('#rm-bg').click(()=>{
             contextBGImg.clearRect(0, 0, canvasBGImg.width, canvasBGImg.height);
@@ -223,6 +214,16 @@
         $('#opacity').click(()=>{
             $('#bg-img').css("opacity","0.5");
             bgOpacity = 0.5;
+        });
+
+        // CLEAR CANVAS
+
+        $('#clear').click(()=>{
+            // config.history.clear();
+            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
         });
 
         // UNDO / REDO
@@ -239,6 +240,31 @@
             $('#redo').click(()=>{
                 config.history.redo();
             })
+
+        // DOWNLOAD CANVAS IMAGE
+
+        function download(){            
+
+        // MERGING CANVASES
+        var canvasA = document.getElementById('background');
+        var canvasB = document.getElementById('bg-img');
+        var canvasC = document.getElementById('canvas-real');
+        var canvasD = document.getElementById('canvas-combined');
+
+        var contextCombined = canvasD.getContext("2d");
+        contextCombined.drawImage(canvasA,0,0);
+        contextCombined.globalAlpha = bgOpacity;
+        contextCombined.drawImage(canvasB,0,0);
+        contextCombined.globalAlpha = 1;
+        contextCombined.drawImage(canvasC,0,0);
+            
+        // DOWNLOAD ACTION
+        var download = document.getElementById("download");
+        var image = document.getElementById("canvas-combined").toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+            download.setAttribute("href", image);
+
+        }
         
     </script>
 
