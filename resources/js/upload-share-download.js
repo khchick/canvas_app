@@ -45,6 +45,7 @@ $('#uploadButton').click(()=>{
               // CONVERTING CANVAS TO BLOB
               var canvas = document.getElementById('canvas-combined');
               canvas.toBlob((blob)=>{
+                
                   
                   // UPLOAD THE BLOB/FILE
                   var file = blob;
@@ -143,6 +144,7 @@ $('#loadPuzzle').click(()=>{
             
             // DRAW IMAGE ON CANVAS
             var puzzle = new Image();
+            puzzle.crossOrigin = "Anonymous";
             puzzle.src = url;
             puzzle.onload = ()=> {
               contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);

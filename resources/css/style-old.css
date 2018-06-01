@@ -1,0 +1,105 @@
+.canvas{
+    /* border:1px black dotted; */
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    background-color: transparent;
+}
+
+#canvas-combined {
+    display: none;
+}
+
+#canvas-draft{
+    background-color: transparent;
+}
+body{
+    overflow:hidden;
+    margin: 10px;
+    font: 16px Helvetica;
+}
+#canvas-container{
+    height:400px;
+}  
+
+#bg-img {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#background {
+    z-index: -2;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#paintFunctions {
+    background-color: #96b0e0;
+}
+
+#colorPicker {
+    background-color: #96b0e0;
+}
+
+#bgUpload {
+    background-color: #96b0e0;
+}
+
+#flowControl {
+    background-color: #fdec9f;
+}
+
+#interAct {
+    background-color: #79b881;
+}
+
+/* #playground {
+    z-index: -2;
+    position: absolute;
+    top: 0;
+    left: 800px;
+    background-color: lightgray;
+} */
+
+#dialog-form,
+#dialog-message,
+#dialog-form-puzzle,
+#dialog-message-puzzle {
+    display: none;
+}
+
+
+/*Text settings styles*/
+#textOptions {
+	margin-bottom: 5px;
+	display: block;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+#textFont {
+	font-size: 12px;
+}
+.textSizeContainer{
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+
+#textInput{
+	display: none;
+	position: absolute;
+	z-index: 5;
+	background-color: transparent;
+	background-image: none;
+	border: 1px dotted gray;
+}
+
+#textTools {
+    display: none;
+}
+

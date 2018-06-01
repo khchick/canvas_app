@@ -45,9 +45,9 @@ function render(src){
 		}
 		var ctx = canvas.getContext("2d");
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		canvas.width = image.width;
-		canvas.height = image.height;
-		ctx.drawImage(image, 0, 0, image.width, image.height);
+		// canvas.width = image.width;
+		// canvas.height = image.height;
+		ctx.drawImage(image, (canvas.width-image.width)/2, (canvas.height-image.height)/2, image.width, image.height);
 	};
 	image.src = src;
 }

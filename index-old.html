@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- OG MARKUP FOR FB SHARING -->
+    <meta property="fb:app_id" content="124285848214697" />
+    <meta property="og:url" content="https://khchick.com"  >
+    <meta property="og:type" content="game" >
+    <meta property="og:title" content="JOIN & SHARE" >
+    <meta property="og:description" content="Come and see what I've created using this app! You can share your own too!" />
+    <meta property="og:image" content="http://drib.tech/fbsharetest/quiz_landing.jpg" >
+    <meta property="og:image:width" content="1200" >
+    <meta property="og:image:height" content="630" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
+    <link href="resources/css/style.css" rel="stylesheet" type='text/css'>
+    <title>JOIN & SHARE</title>
+</head>
+<body>
+    <!-- FB Javascript SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId            : '269791440228761',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v3.0'
+            });
+        };
+        
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+    </script>
+    
+    <!-- CANVAS -->
+    <div id="canvas-container">
+        <canvas id="canvas-combined" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="bg-img" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
+        <input id="textInput" name="inputField" value=""></input>
+    </div>
+
+    <!-- PAINTING TOOLS     -->
+    <div id="paintFunctions">
+        <h5>Painting tools</h5>
+        <div class="buttons">
+            <span class="btn btn-primary fa fa-paint-brush" id="drawing-free" >Free</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="drawing-line" >Line</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="drawing-curve" >Curve</span>
+            <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Rectangle</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="drawing-ellipse" >Ellipse</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="drawing-dot" >Dot</span>
+            <span class="btn btn-primary fa fa-paint-brush textButton" id="drawing-text" >Add Text</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="eraser" >Eraser</span>
+        </div>
+
+        <!-- BRUSH SIZE CONTROL -->
+        <div>
+            <label for="brush">Brush Size</label>
+            <div class="showBrushSize" id="brushSize" value="5">M</div>
+            <input type="radio" name="brush-size" value="S" id="brushS">S</input>
+            <input type="radio" name="brush-size" value="M" id="brushM">M</input>
+            <input type="radio" name="brush-size" value="L" id="brushL">L</input>
+        </div>
+
+        <!-- TEXT TOOLS -->
+        <div id="textTools">
+            <label for="brush">Text Size</label>
+            <div class="showTextSize" id="textSize" value="17">M</div>
+            <span class="btn btn-primary fa fa-paint-brush" id="textS" >S</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="textM" >M</span>
+            <span class="btn btn-primary fa fa-paint-brush" id="textL" active>L</span>
+            <select id="textFont" name="text Font" onchange="canvasSettings.changeText()">
+                <option> Arial </option>
+                <option> Metrophobic </option>
+                <option> Tahoma </option>
+                <option> Verdana </option>
+            </select>
+        </div>
+<!-- 
+
+
+        <div id="sizeMenu">
+            <div class="showSize"><div class="sizeImage"></div></div>
+            <div class="sizeSlider"><input type="range" min="1" max="51" value="5" step="2" class="slider" id="brushSize"></div>
+        </div>
+    </div>
+ -->
+
+
+    <!-- COLORING TOOL -->
+    <div id="colorPicker">
+        <h5>Color palette</h5>
+        <label for="strokeCol">Stroke Color</label>
+        <input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input>
+        <label for="fillCol">Fill Color</label>
+        <input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input>
+        <label for="bgCol">Background Color</label>
+        <input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input>
+    </div>
+    
+    <!-- BACKGROUND IMAGE UPLOAD UI -->
+    <div id="bgUpload">
+        <div>
+            <h5>Upload image as background</h5>
+            <input type="file" id="fileInput">
+            <button id="opacityF">full opacity</button>
+            <button id="opacityH">Half opacity</button>
+            <button id="rm-bg">Remove background</button>
+        </div>
+        <div id="fileDisplayArea"></div>
+    </div>
+
+    <!-- FLOW CONTROL -->
+    <div id="flowControl">
+        <h5>Flow control</h5>
+        <button id="clear">Clear Canvas</button>
+        <button id="undo">Undo</button>
+        <button id="redo">Redo</button>
+        <a id="download" download="my-canvas.png"><button type="button" onClick="download()">Download</button></a>
+    </div>
+
+    <!-- INTERACTIVITY -->
+    <div id="interAct">
+        <h5>Create puzzle image and share with friends</h5>
+
+        <!-- FILE UPLOAD TO FIREBASE -->
+        <input type="button" value="Upload & Share" id="uploadButton" />
+        <label for="uploadButton">Progress</label>
+        <progress value="0" max="100" id="uploader">0%</progress>
+
+        <!-- LOAD AN UNFINISHED DRAWING (PUZZLE) FROM SERVER -->
+
+        <input type="button" value="Load a puzzle" id="loadPuzzle" />
+
+            <!-- CUSTOM DIALOG BOXES -->
+            <div id="dialog-form" title="Getting ready for upload">
+                <form>
+                    <label for="filename">Please provide a name for your puzzle:</label>
+                    <input type="text" name="filename" id="imgFilename" class="text ui-widget-content ui-corner-all" required/>
+                </form>
+            </div>
+            <div id="dialog-message" title="Upload complete"></div>
+    
+            <div id="dialog-form-puzzle" title="Retrive puzzle">
+                <form></form>
+                    <label for="filename">Please enter the unique key for us to look it up:</label>
+                    <input type="text" name="filename" id="puzzleFilename" class="text ui-widget-content ui-corner-all" required/>
+                </form>
+            </div>
+            <div id="dialog-message-puzzle" title="Puzzle loaded">Add your creation and share it back with your friend!</div>            
+
+        <!-- SHARE THIS APP -->
+        <h5>Share this app</h5>
+        <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        
+        
+        <!-- POST CANVAS IMAGE TO FB -->
+        <!-- <button id="post2FB">
+        Post image to FB (deprecated)
+        </button> -->
+
+    </div>
+
+    <!-- INITIALIZE FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        var config = {
+        apiKey: "AIzaSyBfglyjJ3OmKTkSEzw-UNeVyIiY5Hfrq7o",
+        authDomain: "canvas-app-69908.firebaseapp.com",
+        databaseURL: "https://canvas-app-69908.firebaseio.com",
+        projectId: "canvas-app-69908",
+        storageBucket: "canvas-app-69908.appspot.com",
+        messagingSenderId: "773196875416"
+        };
+        firebase.initializeApp(config);
+    </script>
+    
+    <!-- LIBRARIES -->
+    <script src="vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+       
+    <!-- FUNCTIONS -->
+    <script src="resources/js/config.js"></script>
+    <script src="resources/js/canvas-common.js"></script>
+    <script src="resources/js/drawing-free.js"></script>
+    <script src="resources/js/drawing-line.js"></script>
+    <script src="resources/js/drawing-rectangle.js"></script>
+    <script src="resources/js/eraser.js"></script>
+    <script src="resources/js/drawing-ellipse.js"></script>
+    <script src="resources/js/drawing-dot.js"></script>
+    <script src="resources/js/drawing-curve.js"></script>
+    <script src="resources/js/drawing-text.js"></script>
+    <script src="resources/js/background-upload.js"></script>
+    <script src="vendors/jscolor/jscolor.js"></script>
+    <script src="resources/js/upload-share-download.js"></script>
+    <!-- <script src="vendors/hammerjs/hammer.js"></script> -->
+
+    <!-- UI FUNCTIONS -->
+    <script type='text/javascript'>
+
+        // PAINT FUNCTIONS
+
+        $('#drawing-rectangle').click(()=>{
+            currentFunction = new DrawingRectangle(contextReal,contextDraft);
+        });
+
+        $('#drawing-free').click(()=>{
+            currentFunction = new DrawingFree(contextReal,contextDraft);
+        });
+
+        $('#drawing-line').click(()=>{
+            currentFunction = new DrawingLine(contextReal,contextDraft);
+        });
+
+        $('#eraser').click(()=>{
+            currentFunction = new Eraser(contextReal,contextDraft);
+        });
+
+        $('#drawing-ellipse').click(()=>{
+            currentFunction = new DrawingEllipse(contextReal,contextDraft);
+        });
+
+        $('#drawing-dot').click(()=>{
+            currentFunction = new DrawingDot(contextReal,contextDraft);
+            i++;
+        });
+        
+        $('#drawing-curve').click(()=>{
+            currentFunction = new DrawingQuadraticCurve(contextReal,contextDraft);            
+        });
+
+        $('#drawing-text').click(()=>{
+            currentFunction = new DrawingText(contextReal,contextDraft);
+            $('#textTools').css({"display":"block"});
+        });
+
+        // BRUSH CONTROL
+        $('#brushS').click(()=>{
+            config.brushSize = 1;
+        })
+
+        $('#brushM').click(()=>{
+            config.brushSize = 5;
+        })
+
+        $('#brushL').click(()=>{
+            config.brushSize = 10;
+        })
+        
+         // TEXT CONTROL
+        $('#textS').click(()=>{
+            config.textSize = 10;
+        })
+
+        $('#textM').click(()=>{
+            config.textSize = 17;
+        })
+
+        $('#textL').click(()=>{
+            config.textSize = 24;
+        })
+
+        // REMOVE BACKGROUND IMAGE
+
+        $('#rm-bg').click(()=>{
+            contextBGImg.clearRect(0, 0, canvasBGImg.width, canvasBGImg.height);
+        });
+
+        // SUPPORTING TOOL
+        
+        $('#opacityH').click(()=>{
+            $('#bg-img').css("opacity","0.5");
+            bgOpacity = 0.5;
+        });
+
+        $('#opacityF').click(()=>{
+            $('#bg-img').css("opacity","1");
+            bgOpacity = 0.5;
+        });
+
+        // CLEAR CANVAS
+
+        $('#clear').click(()=>{
+            // config.history.clear();
+            contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
+        });
+
+        // UNDO / REDO
+        
+            // CREATE 1ST SNAPSHOT
+            config.history.snapshot[config.history.action] = new Image();
+            config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
+            config.history.action++;
+
+            $('#undo').click(()=>{
+                config.history.undo();
+            })
+
+            $('#redo').click(()=>{
+                config.history.redo();
+            })
+
+        // DOWNLOAD CANVAS IMAGE
+
+        function download(){            
+
+        // MERGING CANVASES
+        var canvasA = document.getElementById('background');
+        var canvasB = document.getElementById('bg-img');
+        var canvasC = document.getElementById('canvas-real');
+        var canvasD = document.getElementById('canvas-combined');
+
+        var contextCombined = canvasD.getContext("2d");
+        contextCombined.drawImage(canvasA,0,0);
+        contextCombined.globalAlpha = bgOpacity;
+        contextCombined.drawImage(canvasB,0,0);
+        contextCombined.globalAlpha = 1;
+        contextCombined.drawImage(canvasC,0,0);
+            
+        // DOWNLOAD ACTION
+        var download = document.getElementById("download");
+        var image = document.getElementById("canvas-combined").toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+            download.setAttribute("href", image);
+
+        }
+        
+    </script>
+
+    
+
+</body>
+</html>

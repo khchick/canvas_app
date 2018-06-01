@@ -19,7 +19,7 @@ class DrawingDot extends PaintFunction{
         this.numInstances++;
     }
 
-    onDragging(coord,event){}
+    onDragging(){}
     onMouseMove(){}
     onMouseUp(){
         this.contextReal.drawImage(canvasDraft, 0, 0);

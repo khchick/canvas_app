@@ -20,121 +20,159 @@
     <title>JOIN & SHARE</title>
 </head>
 <body>
-    <!-- FB Javascript SDK -->
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-            appId            : '269791440228761',
-            autoLogAppEvents : true,
-            xfbml            : true,
-            version          : 'v3.0'
-            });
-        };
-        
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-    </script>
+ 
     
     <!-- CANVAS -->
     <div id="canvas-container">
-        <canvas id="canvas-combined" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-real" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-draft" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-        <canvas id="bg-img" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-        <canvas id="background" class="canvas" width='800px' height='400px'>Your browser does not support Canvas</canvas>
-    </div>
-
-    <!-- PAINTING TOOLS     -->
-    <div id="paintFunctions">
-        <h5>Painting tools</h5>
-        <div class="buttons">
-            <span class="btn btn-primary fa fa-paint-brush" id="drawing-free" >Free</span>
-            <span class="btn btn-primary fa fa-paint-brush" id="drawing-line" >Line</span>
-            <span class="btn btn-primary fa fa-paint-brush" id="drawing-curve" >Curve</span>
-            <span class="btn btn-primary fa fa-square" id="drawing-rectangle" >Rectangle</span>
-            <span class="btn btn-primary fa fa-paint-brush" id="drawing-ellipse" >Ellipse</span>
-            <span class="btn btn-primary fa fa-paint-brush" id="drawing-dot" >Dot</span>
-            <span class="btn btn-primary fa fa-paint-brush" id="eraser" >Eraser</span>
-        </div>
-    </div>
-
-    <!-- COLORING TOOL -->
-    <div id="colorPicker">
-        <h5>Color palette</h5>
-        <label for="strokeCol">Stroke Color</label>
-        <input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input>
-        <label for="fillCol">Fill Color</label>
-        <input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input>
-        <label for="bgCol">Background Color</label>
-        <input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input>
+        <canvas id="canvas-combined" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="bg-img" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+    <!-- KING-NEW -->
+        <input id="textInput" name="inputField" value=""></input>
+    <!-- KING-NEW -->
     </div>
     
-    <!-- BACKGROUND IMAGE UPLOAD UI -->
-    <div id="bgUpload">
-        <div>
-            <h5>Upload image as background</h5>
-            <input type="file" id="fileInput">
-            <button id="opacity">Half opacity</button>
-            <button id="rm-bg">Remove background</button>
-        </div>
-        <div id="fileDisplayArea"></div>
-    </div>
-
-    <!-- FLOW CONTROL -->
-    <div id="flowControl">
-        <h5>Flow control</h5>
-        <button id="clear">Clear Canvas</button>
-        <button id="undo">Undo</button>
-        <button id="redo">Redo</button>
-        <a id="download" download="my-canvas.png"><button type="button" onClick="download()">Download</button></a>
-    </div>
-
-    <!-- INTERACTIVITY -->
-    <div id="interAct">
-        <h5>Create puzzle image and share with friends</h5>
-
-        <!-- FILE UPLOAD TO FIREBASE -->
-        <input type="button" value="Upload & Share" id="uploadButton" />
-        <label for="uploadButton">Progress</label>
-        <progress value="0" max="100" id="uploader">0%</progress>
-
-        <!-- LOAD AN UNFINISHED DRAWING (PUZZLE) FROM SERVER -->
-
-        <input type="button" value="Load a puzzle" id="loadPuzzle" />
-
-            <!-- CUSTOM DIALOG BOXES -->
-            <div id="dialog-form" title="Getting ready for upload">
-                <form>
-                    <label for="filename">Please provide a name for your puzzle:</label>
-                    <input type="text" name="filename" id="imgFilename" class="text ui-widget-content ui-corner-all" required/>
-                </form>
+    <div class="sidebar">
+            <button class="sidebarBtn"><div><img src="images/palette.png"></div></button>
+            <!-- PAINTING TOOLS-->
+            <div id="paintingTools"class="btn-group-vertical">
+                <a class="btn btn-collapsible pencilButton active" title="Drawing Tool" id="drawing-free"><img class="img-responsive" src="images/pencil.png" height="20px" width="20px"><span>Brush Tool</span></a>
+                <a class="btn btn-collapsible eraserButton active" title="Eraser Tool" id="eraser"><img class="img-responsive" src="images/eraser.png" height="20px" width="20px"><span>Eraser Tool</span></a>
+                <div class="btn btn-sm btn-collapsible lineButton active" title="Line Tool" id="drawing-line"> <img class="img-responsive" src="images/line.png" height="20px" width="20px"><span>Line Tool</span></div>
+                <a class="btn btn-sm btn-collapsible dotButton active" title="Numbered Dot Tool" id="drawing-dot"> <img class="img-responsive" src="images/settings.png" height="20px" width="20px"><span>Numbered Dot Tool</span></a>
+                <a class="btn btn-sm btn-collapsible circleButton active" title="Ellipse Tool" id="drawing-ellipse"> <img class="img-responsive" src="images/circle.png" height="20px" width="20px"><span>Ellipse Tool</span></a>
+                <a class="btn btn-sm btn-collapsible rectangleButton active" title="Rectangle Tool" id="drawing-rectangle"> <img class="img-responsive" src="images/rectangle.png" height="20px" width="20px"><span>Rectangular Tool</span></a>
+                <!-- <a class="btn btn-sm btn-collapsible polygonButton active" title="Polygon Tool" id="drawing-polygon"> <img class="img-responsive" src="images/polygon.png" height="20px" width="20px"><span>Polygon Tool</span></a> -->
+                <a class="btn btn-sm btn-collapsible textButton active" title="Text Tool" id="drawing-text"> <img class="img-responsive" src="images/text.png" height="20px" width="20px"><span>Text Tool</span></a>
             </div>
-            <div id="dialog-message" title="Upload complete"></div>
+            <!-- KING-NEW -->
+                <!-- BRUSH SIZE CONTROL -->
+                <div>
+                    <label for="brush">Brush Size</label>
+                    <div class="showBrushSize" id="brushSize" value="5">M</div>
+                    <input type="radio" name="brush-size" value="S" id="brushS">S</input>
+                    <input type="radio" name="brush-size" value="M" id="brushM">M</input>
+                    <input type="radio" name="brush-size" value="L" id="brushL">L</input>
+                </div>
+                <!-- TEXT TOOLS -->
+                <div id="textTools">
+                    <label for="brush">Text Size</label>
+                    <div class="showTextSize" id="textSize" value="17">M</div>
+                    <span class="btn btn-primary fa fa-paint-brush" id="textS" >S</span>
+                    <span class="btn btn-primary fa fa-paint-brush" id="textM" >M</span>
+                    <span class="btn btn-primary fa fa-paint-brush" id="textL" active>L</span>
+                    <select id="textFont" name="text Font" onchange="canvasSettings.changeText()">
+                        <option> Arial </option>
+                        <option> Metrophobic </option>
+                        <option> Tahoma </option>
+                        <option> Verdana </option>
+                    </select>
+                </div>
+            <!-- KING-NEW -->
+            <br>
+            <!-- COLORING TOOLS -->
+            <div id="colorPicker" class="btn-group-vertical">
+                <a class="btn btn-sm btn-collapsible strokeColor active" title="Stroke Color" id="stroke-color"> <img class="img-responsive" src="images/circle.png" height="20px" width="20px"><span>Stroke Color</span><input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input></a>
+                <a class="btn btn-sm btn-collapsible fillColor active" title="Fill Color" id="fill-color"> <img class="img-responsive" src="images/grayscale.png" height="20px" width="20px"><span>Fill Color</span><input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input></a>
+                <a class="btn btn-sm btn-collapsible bgColor active" title="Background Color" id="bg-color"> <img class="img-responsive" src="images/themes.png" height="20px" width="20px"><span>Background Color</span><input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input></a>
+             </div>
+             <br>
+            <!-- BACKGROUND IMAGE UPLOAD UI -->
+            <div class="image-upload btn-group-vertical" id="bgUpload">
+                <a class="btn btn-sm btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/import.png" height="20px" width="20px"><span>Select an Image File</span><input type="file" id="fileInput"></a>
+                <!-- KING-NEW -->
+                    <a class="btn btn-sm btn-collapsible opacity active" title="Opacity" id="opacityF"> <img class="img-responsive" src="images/grayscale.png" height="20px" width="20px"><span>Full Opacity</span></a>
+                <!-- KING-NEW -->
+                <a class="btn btn-sm btn-collapsible opacity active" title="Opacity" id="opacityH"> <img class="img-responsive" src="images/grayscale.png" height="20px" width="20px"><span>Half Opacity</span></a>
+                <a class="btn btn-sm btn-collapsible removeBG active" title="Remove Background Image" id="rm-bg"> <img class="img-responsive" src="images/rectangle.png" height="20px" width="20px"><span>Remove Background Image</span></a>
+                <div id="fileDisplayArea"></div>
+            </div>
+<br>
+        
+     </div>  
+
+     <div class="sidebar2">
+     <button class="sidebarBtn2"><div><img src="images/refresh.png"></div></button>
+      <!-- FLOW CONTROL -->
+    <div class="btn-group-vertical" id="undoRedoGroup">
+            <a class="btn btn-sm btn-collapsible undo active" title="Undo" id="undo"> <img class="img-responsive" src="images/undo.png" height="20px" width="20px"><span>Undo</span></a>
+            <a class="btn btn-sm btn-collapsible redo active" title="Redo" id="redo"> <img class="img-responsive" src="images/redo.png" height="20px" width="20px"><span>Redo</span></a>
+            <a class="btn btn-sm btn-collapsible clearButton active" title="Clear Canvas" id="clear"> <img class="img-responsive" src="images/clear.png" height="20px" width="20px"><span>Clear</span></a>
+        <!-- KING-NEW -->
+            <a id="download" download="my-canvas.png"><button type="button" onClick="download()">Download</button></a>
+        <!-- KING-NEW -->
+    </div>
+    </div>
+    </div>
+
+
+    <div class="sidebar3">
+            <button class="sidebarBtn3"><div><img src="images/settings.png"></div></button>
+             <!-- FLOW CONTROL -->
+           <!-- INTERACTIVITY -->
+        <div class="btn-group-vertical" id="interAct">
+
+                <!-- FILE UPLOAD TO FIREBASE -->
+                <a class="btn btn-sm btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/import.png" height="20px" width="20px"><span>Create puzzle image and share with friends</span><input type="button" value="Upload & Share" id="uploadButton" /></a>
+                <!--<label for="uploadButton">Progress</label>
+                <progress value="0" max="100" id="uploader">0%</progress> -->
+                </div>
+                <div>
+                    <!-- LOAD AN UNFINISHED DRAWING (PUZZLE) FROM SERVER -->
+                    <a class="btn btn-sm btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/refresh.png" height="20px" width="20px"><input type="button" value="Load a puzzle" id="loadPuzzle" /></a>
+                </div>
+        
+        
+        
+                  <!-- CUSTOM DIALOG BOXES -->
+                  <div id="dialog-form" title="Getting ready for upload">
+                        <form>
+                            <label for="filename">Please provide a name for your puzzle:</label>
+                            <input type="text" name="filename" id="imgFilename" class="text ui-widget-content ui-corner-all" required/>
+                        </form>
+                    </div>
+                    <div id="dialog-message" title="Upload complete"></div>
+                    
+                            <div id="dialog-form-puzzle" title="Retrive puzzle">
+                                <form></form>  
+                                    <label for="filename">Please enter the unique key for us to look it up:</label>
+                                    <input type="text" name="filename" id="puzzleFilename" class="text ui-widget-content ui-corner-all" required/>
+                                </form>
+                            </div>
+                            <div id="dialog-message-puzzle" title="Puzzle loaded">Add your creation and share it back with your friend!</div>            
+                        <!-- SHARE THIS APP -->
+                        <a class="btn btn-sm btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/import.png" height="20px" width="20px"><span>Share this app</span><iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></a>
+                        <!-- POST CANVAS IMAGE TO FB -->
+                        <!-- <button id="post2FB">
+                        Post image to FB (deprecated)
+                        </button> -->
+                </div>     
+           </div>
+
+
+
+
+            
+            
     
-            <div id="dialog-form-puzzle" title="Retrive puzzle">
-                <form></form>
-                    <label for="filename">Please enter the unique key for us to look it up:</label>
-                    <input type="text" name="filename" id="puzzleFilename" class="text ui-widget-content ui-corner-all" required/>
-                </form>
-            </div>
-            <div id="dialog-message-puzzle" title="Puzzle loaded">Add your creation and share it back with your friend!</div>            
+   
+    
 
-        <!-- SHARE THIS APP -->
-        <h5>Share this app</h5>
-        <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         
-        
-        <!-- POST CANVAS IMAGE TO FB -->
-        <!-- <button id="post2FB">
-        Post image to FB (deprecated)
-        </button> -->
+            
 
+
+            
+            
+
+
+            
     </div>
+</div>
+</div>
+
 
     <!-- INITIALIZE FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
@@ -165,9 +203,52 @@
     <script src="resources/js/drawing-ellipse.js"></script>
     <script src="resources/js/drawing-dot.js"></script>
     <script src="resources/js/drawing-curve.js"></script>
+    <script src="resources/js/drawing-text.js"></script>
     <script src="resources/js/background-upload.js"></script>
     <script src="vendors/jscolor/jscolor.js"></script>
     <script src="resources/js/upload-share-download.js"></script>
+    <!-- <script
+  src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $('.sidebarBtn').click(function(){
+                    $('.sidebar').toggleClass('btnActive');
+                })
+
+            })
+            $(document).ready(function(){
+                $('.sidebarBtn2').click(function(){
+                    $('.sidebar2').toggleClass('btnActive2');
+                })
+
+            })
+            $(document).ready(function(){
+                $('.sidebarBtn3').click(function(){
+                    $('.sidebar3').toggleClass('btnActive3');
+                })
+
+            })
+    </script>
+
+    <!-- FB Javascript SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId            : '269791440228761',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v3.0'
+            });
+        };
+        
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <!-- UI FUNCTIONS -->
     <script type='text/javascript'>
@@ -202,20 +283,45 @@
         $('#drawing-curve').click(()=>{
             currentFunction = new DrawingQuadraticCurve(contextReal,contextDraft);
         });
-        
-        // REMOVE BACKGROUND IMAGE
 
-        $('#rm-bg').click(()=>{
-            contextBGImg.clearRect(0, 0, canvasBGImg.width, canvasBGImg.height);
+        // $('#drawing-polygon').click(()=>{
+        //     currentFunction = new DrawingPolygon(contextReal,contextDraft);
+        // });
+
+    // KING-NEW
+        $('#drawing-text').click(()=>{
+            currentFunction = new DrawingText(contextReal,contextDraft);
+            $('#textTools').css({"display":"block"});
         });
 
-        // SUPPORTING TOOL
-        
-        $('#opacity').click(()=>{
-            $('#bg-img').css("opacity","0.5");
-            bgOpacity = 0.5;
-        });
+        // BRUSH CONTROL
+        $('#brushS').click(()=>{
+            config.brushSize = 1;
+        })
 
+        $('#brushM').click(()=>{
+            config.brushSize = 5;
+        })
+
+        $('#brushL').click(()=>{
+            config.brushSize = 10;
+        })
+        
+         // TEXT CONTROL
+        $('#textS').click(()=>{
+            config.textSize = 10;
+        })
+
+        $('#textM').click(()=>{
+            config.textSize = 17;
+        })
+
+        $('#textL').click(()=>{
+            config.textSize = 24;
+        })
+    // KING-NEW
+        
+       
         // CLEAR CANVAS
 
         $('#clear').click(()=>{
@@ -224,6 +330,22 @@
             config.history.snapshot[config.history.action] = new Image();
             config.history.snapshot[config.history.action].src = canvasReal.toDataURL();
             config.history.action++;
+        });
+
+        $('#rm-bg').click(()=>{
+            contextBGImg.clearRect(0, 0, canvasBGImg.width, canvasBGImg.height);
+        });
+
+        // SUPPORTING TOOL
+
+        $('#opacityF').click(()=>{
+            $('#bg-img').css("opacity","1");
+            bgOpacity = 1;
+        });
+        
+        $('#opacityH').click(()=>{
+            $('#bg-img').css("opacity","0.5");
+            bgOpacity = 0.5;
         });
 
         // UNDO / REDO
@@ -241,6 +363,7 @@
                 config.history.redo();
             })
 
+    // KING-NEW
         // DOWNLOAD CANVAS IMAGE
 
         function download(){            
@@ -265,10 +388,8 @@
             download.setAttribute("href", image);
 
         }
+    // KING-NEW
         
     </script>
-
-    
-
 </body>
 </html>
