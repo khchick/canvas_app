@@ -4,30 +4,16 @@ body {
 
 h1 {
 	margin-left: 380px;
-    margin-top: -180px;
+    margin-top: -120px;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	color: gold;
 	text-shadow: 2px 2px darkred;
     font-size: 50px;
 }
 
-.title {
-	background: rgb(93, 165, 91);
-}
-
 .logo {
-	height: 180px;
-	width: 180px;
 	border: 6px double darkgoldenrod;
 	box-shadow: 1px 1px;
-}
-
-.bg-image {
-	position: absolute;
-	margin-top: -111px;
-	margin-left: -10px;
-	opacity: 1;
-	z-index: -10;
 }
 
 /*-------------------Canvas styles-------------------*/
@@ -37,9 +23,8 @@ h1 {
     bottom:0px;
     left: 0px;
     right: 0px;
-	/* background-color: white; */
 	position: absolute;
-	margin-left: 200px;
+	margin-left: 135px;
 	margin-top: 80px;
 	border-width:12px;  
 	border-style:ridge;
@@ -157,32 +142,21 @@ body{
 	display: none;
 }
 
-.img-responsive {
-	width: 20px;
-	height: 20px;
-	padding: 0;
-	margin: 0;
-}
-
-
 .btn {
 	background: rgb(255, 255, 255);
 	border: 1px solid rgb(141, 36, 36);
 }
 
 .btn:focus {
-	background: rgb(233, 232, 205);
-	border: 3px ridge rgba(85, 255, 246, 0.945);
-	border-radius: 5px 5px ;
+	background: goldenrod;
+	border: 1px dotted rgb(0, 0, 0);
 }
 
 .btn-collapsible {
 	overflow: hidden;
 	transition: all 1s ease-in-out;
     max-width: 40px;
-	margin: 5px 0;
-	display: flex;
-	align-items: flex-start;
+    margin: 5px 0;
   }
 
 	.btn-collapsible:hover {
@@ -192,19 +166,19 @@ body{
 	
 	}
 
-	.btn-name {
+	span {
 	  opacity: 0;
-	  text-indent: 0px;
+	  text-indent: -6px;
 	  display: inline-block;
 	  transition: all 500ms ease-in-out;
 	}
 
 	
-	.btn-name:hover {
-	  opacity: 1;
+	span:hover {
+	  opacity: 100;
 	  max-width: 300px;
 	  transition: all 0.5s ease-in-out;
-	  /* text-indent: 5%; */
+	  text-indent: 5%;
 	  color: rgb(0, 0, 0);
 	  border-radius: 15px 50px;
 	}
@@ -258,17 +232,13 @@ body{
     justify-content: space-evenly;
     text-align: center;
     border-radius: 0 15px 15px 0;
-	border-left: 0;
+    border-left: 0;
 }
 
 .sidebarBtn h6 {
     margin: 0;
     text-align: left;
-	vertical-align: middle;
-	font-size: 21px;
-	color: rgb(91, 107, 250);
-	text-shadow: 1px grey;
-	
+    vertical-align: middle;
 }
     /* KING-NEW */
 
@@ -348,10 +318,7 @@ body{
 .sidebarBtn2 h6 {
     margin: 0;
     text-align: left;
-	vertical-align: middle;
-	font-size: 15px;
-	color: rgb(91, 155, 250);
-	text-shadow: 1px grey;
+    vertical-align: middle;
 }
     /* KING-NEW */
 
@@ -419,11 +386,7 @@ body{
 .sidebarBtn3 h6 {
     margin: 0;
     text-align: left;
-	vertical-align: middle;
-	font-size: 21px;
-	color: rgb(91, 155, 250);
-	text-shadow: 1px grey;
-	
+    vertical-align: middle;
 }
     /* KING-NEW */
 
@@ -466,11 +429,11 @@ input[type='file'] {
 
 #drawing-free, #eraser, #drawing-line, #drawing-curve, #drawing-dot, #drawing-ellipse, #drawing-rectangle, #drawing-text, #brush-size,
 #stroke-color, #fill-color, #bg-color,
-#undo, #redo, #clear {
+#undo, #redo, #clear, #download {
     right: -7px;
 }
 
-#select-image, #load-image, #download-link, #share-app {
+#select-image, #load-image, #download, #share-app {
     right: -128px
 }
 
@@ -531,18 +494,4 @@ input[type="radio"] {
 
 span2 {
     font-size: 50px;
-}
-
-/* TITLE */
-
-.title h1 {
-	font-family: "Indie Flower", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-a:link {
-	text-decoration: none;
-}
-
-#fb-share {
-	margin-left: 20px;
 }

@@ -22,8 +22,147 @@
 </head>
 <body>
 
+    <div class="logo-section"><div><img class="logo" src="images/logo.jpg"></div>
+    <div class ="title"><h1>Let's draw together!</h1></div>
+    <div class="bg-section"><img class="bg-image" src="images/creative_doodle.jpg"></div>
+    
+    <!-- CANVAS -->
+    <div id="canvas-container">
+        <canvas id="canvas-combined" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-real" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="canvas-draft" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="bg-img" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <canvas id="background" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
+        <input id="textInput" name="inputField" value=""></input>
+    </div>
+
+    <!-- PAINTING TOOLS-->
+    <div class="sidebar">
+        <button class="sidebarBtn">
+            <img src="images/paint.png" class="sidebar-img">
+            <div class="rotate"><h6>Painting Tools</h6></div>
+        </button>
+        
+        <!-- PAINT FUNCTIONS -->
+        <div id="paintingTools"class="btn-group-vertical">
+            <button class="btn btn-collapsible pencilButton active" title="Drawing Tool" id="drawing-free"><img class="img-responsive" src="images/pencil.png"><span class="btn-name">Paint Brush</span></button>
+            <button class="btn btn-collapsible lineButton" title="Line Tool" id="drawing-line"> <img class="img-responsive" src="images/line.png"><span class="btn-name">Linespan></button>
+            <button class="btn btn-collapsible curveButton" title="Line Tool" id="drawing-curve"> <img class="img-responsive" src="images/curve.png"><span class="btn-name">Curve Line</span></button>
+            <button class="btn btn-collapsible rectangleButton" title="Rectangle Tool" id="drawing-rectangle"> <img class="img-responsive" src="images/rectangle.png"><span class="btn-name">Rectangular</span></button>
+            <button class="btn btn-collapsible circleButton" title="Ellipse Tool" id="drawing-ellipse"> <img class="img-responsive" src="images/ellipse.png"><span class="btn-name">Ellipse</span></button>
+            <button class="btn btn-collapsible dotButton" title="Numbered Dot Tool" id="drawing-dot"> <img class="img-responsive" src="images/numbered.png"><span class="btn-name">Numbering Dots</span></button>
+            <button class="btn btn-sm btn-collapsible textButton active" title="Text Tool" id="drawing-text"> <img class="img-responsive" src="images/text.png" height="20px" width="20px"><span>Text Tool</span>
+                <!-- TEXT TOOLS -->
+                <div id="textTools">    
+                    <div class="showTextSize" id="textSize" value="20"></div>
+                    <label for="textFont">Size:</label>
+                    <input type="radio" name="text-size" value="10" id="textS">S</input>
+                    <input type="radio" name="text-size" value="20" id="textM" checked="checked">M</input>
+                    <input type="radio" name="text-size" value="30" id="textL">L</input>
+                    <label for="textFont">Font:</label>
+                    <select id="textFont" name="text Font" onchange="config.changeText()">
+                        <option> Jua </option>
+                        <option> Indie Flower </option>
+                        <option> Raleway Dots </option>
+                        <option> Anton </option>
+                    </select>
+                </div>
+            </button>
+
+            <!-- ERASER -->
+            <button class="btn btn-collapsible eraserButton active" title="Eraser Tool" id="eraser"><img class="img-responsive" src="images/eraser.png"><span class="btn-name">Eraser</span></button>
+
+            <!-- BRUSH SIZE CONTROL  -->
+            <button class="btn btn-sm btn-collapsible brushButton active" title="Brush Tool" id="brush-size"><img class="img-responsive" src="images/eraser.png" height="20px" width="20px"><span>Brush Size</span>
+                <input type="radio" name="brush-size" value="S" id="brushS">S</input>
+                <input type="radio" name="brush-size" value="M" id="brushM" checked="checked">M</input>
+                <input type="radio" name="brush-size" value="L" id="brushL">L</input>
+            </button>
+        </div>
+        
+        <!-- COLORING TOOLS -->
+        <div id="colorPicker" class="btn-group-vertical">
+            <button class="btn btn-collapsible strokeColor" title="Stroke Color" id="stroke-color"> <img class="img-responsive" src="images/stroke.png" height="20px" width="20px"><span class="btn-name">Stroke Color</span><input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input></button>
+            <button class="btn btn-collapsible fillColor" title="Fill Color" id="fill-color"> <img class="img-responsive" src="images/fill.png" height="20px" width="20px"><span class="btn-name">Fill Color</span><input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input></button>
+            <button class="btn btn-collapsible bgColor" title="Background Color" id="bg-color"> <img class="img-responsive" src="images/bgcolor.png" height="20px" width="20px"><span class="btn-name">Background Color</span><input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input></button>
+            </div>
+
+        <!-- FLOW CONTROL -->
+        <div class="btn-group-vertical" id="undoRedoGroup">
+            <button class="btn btn-collapsible undo" title="Undo" id="undo"> <img class="img-responsive" src="images/undo.png"><span class="btn-name">Undo</span></button>
+            <button class="btn btn-collapsible redo" title="Redo" id="redo"> <img class="img-responsive" src="images/redo.png"><span class="btn-name">Redo</span></button>
+            <button class="btn btn-collapsible clearButton" title="Clear Canvas" id="clear"> <img class="img-responsive" src="images/clear.png"><span class="btn-name">Clear</span></button>
+        </div>
+     </div>  
+
+    <div class="sidebar2">
+
+        <!-- BACKGROUND IMAGE MANAGEMENT -->
+        <button class="sidebarBtn2">
+            <img src="images/frame.png"  class="sidebar-img">
+            <div class="rotate">
+                <h6>Background Image</h6>
+            </div>
+        </button>
+
+        <div class="image-upload btn-group-vertical" id="bgUpload">
+            <button class="btn btn-collapsible selectImage" title="Select BG" id="select-bg"> <img class="img-responsive" src="images/import-img.png"><span class="btn-name">Select an Image File</span><input type="file" id="fileInput"></a>
+            <button class="btn btn-collapsible opacity" title="Opacity" id="opacityF"> <img class="img-responsive" src="images/full-opacity.png"><span class="btn-name">Full Opacity</span></button>
+            <button class="btn btn-collapsible opacity" title="Opacity" id="opacityH"> <img class="img-responsive" src="images/half-opacity.png"><span class="btn-name">Half Opacity</span></button>
+            <button class="btn btn-collapsible removeBG" title="Remove Background Image" id="rm-bg"> <img class="img-responsive" src="images/rectangle.png"><span class="btn-name">Remove Background Image</span></button>
+            <div id="fileDisplayArea"></div>
+        </div>
+    </div>
+
+    <div class="sidebar3">
+
+        <!-- INTERACTIVITY -->
+        <button class="sidebarBtn3">
+            <img src="images/networking.png" class="sidebar-img">
+            <div class="rotate">
+                <h6>Backup / Share</h6>
+            </div>
+        </button>
+
+        <div class="btn-group-vertical" id="interAct">
+
+            <!-- FILE UPLOAD TO FIREBASE -->
+            <button class="btn btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/upload.png">
+                <!-- <label for="uploadButton">Progress</label>
+                <progress value="0" max="100" id="uploader">Progress</progress> -->
+                <input type="button" value="Upload & Share" id="uploadButton" />
+            </button>
+            <!-- LOAD AN UNFINISHED DRAWING (PUZZLE) FROM SERVER -->
+            <button class="btn btn-collapsible selectImage active" title="Load Image" id="load-image"> <img class="img-responsive" src="images/load.png"><input type="button" value="Load a puzzle" id="loadPuzzle" /></button>
+
+            <!-- DIRECT DOWNLOAD -->
+            <button class="btn btn-collapsible download" title="Download" id="download" download="my-canvas.png" type="button" onClick="download()"><img class="img-responsive" src="images/download.png"><span type="button" onClick="download()">Download</span></button>
+            
+            <!-- SHARE THIS APP -->
+            <button class="btn btn-collapsible selectImage active" title="Share app" id="share-app"> <img class="img-responsive" src="images/facebook.png"><iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></button>
+            
+        </div>
+
+    </div>
+
+    <!-- CUSTOM DIALOG BOXES -->
+    <div id="dialog-form" title="Getting ready for upload">
+        <form>
+            <label for="filename">Please provide a name for your puzzle:</label>
+            <input type="text" name="filename" id="imgFilename" class="text ui-widget-content ui-corner-all" required/>
+        </form>
+    </div>
+    <div id="dialog-message" title="Upload complete"></div>
+        <div id="dialog-form-puzzle" title="Retrive puzzle">
+            <form></form>  
+                <label for="filename">Please enter the unique key for us to look it up:</label>
+                <input type="text" name="filename" id="puzzleFilename" class="text ui-widget-content ui-corner-all" required/>
+            </form>
+        </div>
+    <div id="dialog-message-puzzle" title="Puzzle loaded">Add your creation and share it back with your friend!</div>            
+
     <!-- LANDING MENU MODAL -->
-    <div class="modal fade" id="landing-menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- <div class="modal fade" id="landing-menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
@@ -54,147 +193,7 @@
             </div>
             </div>
         </div>
-    </div>
-
-    <!-- HEADER -->
-    <div class="logo-section"><div><img class="logo" src="images/logo.jpg"></div>
-    <div class ="title"><h1>Let's draw together!</h1></div>
-    <div class="bg-section"><img class="bg-image" src="images/creative_doodle.jpg"></div>
-    
-    <!-- CANVAS -->
-    <div id="canvas-container">
-        <canvas id="canvas-combined" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-real" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
-        <canvas id="canvas-draft" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
-        <canvas id="bg-img" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
-        <canvas id="background" class="canvas" width='1000px' height='700px'>Your browser does not support Canvas</canvas>
-        <input id="textInput" name="inputField" value=""></input>
-    </div>
-    
-    <!-- PAINTING TOOLS-->
-    <div class="sidebar">
-        <button class="sidebarBtn">
-            <img src="images/paint.png" class="sidebar-img">
-            <div class="rotate"><h6>Painting Tools</h6></div>
-        </button>
-        
-        <!-- PAINT FUNCTIONS -->
-        <div id="paintingTools"class="btn-group-vertical">
-            <button class="btn btn-collapsible pencilButton active" title="Drawing Tool" id="drawing-free"><img class="img-responsive" src="images/pencil.png"><span class="btn-name">Paint Brush</span></button>
-            <button class="btn btn-collapsible lineButton" title="Line Tool" id="drawing-line"> <img class="img-responsive" src="images/line.png"><span class="btn-name">Line</span></button>
-            <button class="btn btn-collapsible curveButton" title="Line Tool" id="drawing-curve"> <img class="img-responsive" src="images/curve.png"><span class="btn-name">Curve</span></button>
-            <button class="btn btn-collapsible rectangleButton" title="Rectangle Tool" id="drawing-rectangle"> <img class="img-responsive" src="images/rectangle.png"><span class="btn-name">Rectangle</span></button>
-            <button class="btn btn-collapsible circleButton" title="Ellipse Tool" id="drawing-ellipse"> <img class="img-responsive" src="images/ellipse.png"><span class="btn-name">Ellipse</span></button>
-            <button class="btn btn-collapsible dotButton" title="Numbered Dot Tool" id="drawing-dot"> <img class="img-responsive" src="images/numbered.png"><span class="btn-name">Numbering Dots</span></button>
-            <button class="btn btn-collapsible textButton" title="Text Tool" id="drawing-text"> <img class="img-responsive" src="images/text.png" height="20px" width="20px"><span class="btn-name">Text Tool</span>
-                <!-- TEXT TOOLS -->
-                <div id="textTools">    
-                    <div class="showTextSize" id="textSize" value="20"></div>
-                    <label for="textFont">Size:</label>
-                    <input type="radio" name="text-size" value="10" id="textS">S</input>
-                    <input type="radio" name="text-size" value="20" id="textM" checked="checked">M</input>
-                    <input type="radio" name="text-size" value="30" id="textL">L</input>
-                    <label for="textFont">Font:</label>
-                    <select id="textFont" name="text Font" onchange="config.changeText()">
-                        <option> Jua </option>
-                        <option> Indie Flower </option>
-                        <option> Raleway Dots </option>
-                        <option> Anton </option>
-                    </select>
-                </div>
-            </button>
-
-            <!-- ERASER -->
-            <button class="btn btn-collapsible eraserButton active" title="Eraser Tool" id="eraser"><img class="img-responsive" src="images/eraser.png"><span class="btn-name">Eraser</span></button>
-
-            <!-- BRUSH SIZE CONTROL  -->
-            <button class="btn btn-sm btn-collapsible brushButton active" title="Brush Tool" id="brush-size"><img class="img-responsive" src="images/eraser.png" height="20px" width="20px"><span class="btn-name">Brush Size</span>
-                <input type="radio" name="brush-size" value="S" id="brushS">S</input>
-                <input type="radio" name="brush-size" value="M" id="brushM" checked="checked">M</input>
-                <input type="radio" name="brush-size" value="L" id="brushL">L</input>
-            </button>
-        </div>
-        
-        <!-- COLORING TOOLS -->
-        <div id="colorPicker" class="btn-group-vertical">
-            <button class="btn btn-collapsible strokeColor" title="Stroke Color" id="stroke-color"> <img class="img-responsive" src="images/stroke.png" height="20px" width="20px"><span class="btn-name">Stroke Color</span><input type="button" id="strokeCol" class="jscolor" value="#000000" onchange="config.changeStrokeCol(this.jscolor)"></input></button>
-            <button class="btn btn-collapsible fillColor" title="Fill Color" id="fill-color"> <img class="img-responsive" src="images/fill.png" height="20px" width="20px"><span class="btn-name">Fill Color</span><input type="button" id="fillCol" class="jscolor" value="#989898" onchange="config.changeFillCol(this.jscolor)"></input></button>
-            <button class="btn btn-collapsible bgColor" title="Background Color" id="bg-color"> <img class="img-responsive" src="images/bgcolor.png" height="20px" width="20px"><span class="btn-name">Background Color</span><input type="button" id="bgCol" class="jscolor" value="#FFFFFF" onchange="config.changeBgCol(this.jscolor)"></input></button>
-            </div>
-
-        <!-- FLOW CONTROL -->
-        <div class="btn-group-vertical" id="undoRedoGroup">
-            <button class="btn btn-collapsible undo" title="Undo" id="undo"> <img class="img-responsive" src="images/undo.png"><span class="btn-name">Undo</span></button>
-            <button class="btn btn-collapsible redo" title="Redo" id="redo"> <img class="img-responsive" src="images/redo.png"><span class="btn-name">Redo</span></button>
-            <button class="btn btn-collapsible clearButton" title="Clear Canvas" id="clear"> <img class="img-responsive" src="images/clear.png"><span class="btn-name">Clear</span></button>
-        </div>
-        </div>  
-
-    <div class="sidebar2">
-
-        <!-- BACKGROUND IMAGE MANAGEMENT -->
-        <button class="sidebarBtn2">
-            <img src="images/frame.png"  class="sidebar-img">
-            <div class="rotate">
-                <h6>Background Image</h6>
-            </div>
-        </button>
-
-        <div class="image-upload btn-group-vertical" id="bgUpload">
-            <button class="btn btn-collapsible selectImage" title="Select BG" id="select-bg"> <img class="img-responsive" src="images/import-img.png"><span class="btn-name">Upload background</span><input type="file" id="fileInput"></a>
-            <button class="btn btn-collapsible opacity" title="Opacity" id="opacityF"> <img class="img-responsive" src="images/full-opacity.png"><span class="btn-name">Full Opacity</span></button>
-            <button class="btn btn-collapsible opacity" title="Opacity" id="opacityH"> <img class="img-responsive" src="images/half-opacity.png"><span class="btn-name">Half Opacity</span></button>
-            <button class="btn btn-collapsible removeBG" title="Remove Background Image" id="rm-bg"> <img class="img-responsive" src="images/rectangle.png"><span class="btn-name">Remove Background Image</span></button>
-            <div id="fileDisplayArea"></div>
-        </div>
-    </div>
-
-    <div class="sidebar3">
-
-        <!-- INTERACTIVITY -->
-        <button class="sidebarBtn3">
-            <img src="images/networking.png" class="sidebar-img">
-            <div class="rotate">
-                <h6>Backup / Share</h6>
-            </div>
-        </button>
-
-        <div class="btn-group-vertical" id="interAct">
-
-            <!-- FILE UPLOAD TO FIREBASE -->
-            <button class="btn btn-collapsible selectImage active" title="Select Image" id="select-image"> <img class="img-responsive" src="images/upload.png">
-                <!-- <label for="uploadButton">Progress</label>
-                <progress value="0" max="100" id="uploader">Progress</progress> -->
-                <span type="button" class="btn-name" id="uploadButton" >Upload & Share</span>
-            </button>
-            <!-- LOAD AN UNFINISHED DRAWING FROM SERVER -->
-            <button class="btn btn-collapsible selectImage active" title="Load Image" id="load-image"> <img class="img-responsive" src="images/load.png"><span type="button" class="btn-name" id="loadPuzzle" >Load an image</span></button>
-
-            <!-- DIRECT DOWNLOAD -->
-            <button class="btn btn-collapsible download" title="Download" id="download-link" download="my-canvas.png" type="button" onClick="download()"><img class="img-responsive" src="images/download.png"><span type="button" onClick="download()" class="btn-name"><a id="download" download="my-canvas.png">Download</a></span></button>
-            
-            <!-- SHARE THIS APP -->
-            <button class="btn btn-collapsible selectImage active" title="Share app" id="share-app"> <img class="img-responsive" src="images/facebook.png"><iframe id="fb-share" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkhchick.com&layout=button&size=large&mobile_iframe=false&appId=269791440228761&width=73&height=28" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></button>
-            
-        </div>
-
-    </div>
-
-    <!-- CUSTOM DIALOG BOXES -->
-    <div id="dialog-form" title="Getting ready for upload">
-        <form>
-            <label for="filename">Please provide a prefix for your image file:</label>
-            <input type="text" name="filename" id="imgFilename" class="text ui-widget-content ui-corner-all" required/>
-        </form>
-    </div>
-    <div id="dialog-message" title="Upload complete"></div>
-        <div id="dialog-form-puzzle" title="Retrieving image">
-            <form></form>  
-                <label for="filename">Please enter the unique key for us to look it up:</label>
-                <input type="text" name="filename" id="puzzleFilename" class="text ui-widget-content ui-corner-all" required/>
-            </form>
-        </div>
-    <div id="dialog-message-puzzle" title="Image loaded">Add your creation and share it back with your friend!</div>            
+    </div> -->
 
     <!-- INITIALIZE FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
@@ -229,6 +228,8 @@
     <script src="resources/js/background-upload.js"></script>
     <script src="vendors/jscolor/jscolor.js"></script>
     <script src="resources/js/upload-share-download.js"></script>
+    <!-- <script
+  src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
     <script type="text/javascript">
             $(document).ready(function(){
                 $('.sidebarBtn').click(function(){
@@ -260,7 +261,16 @@
     })
 </script>
 
+
 -->
+
+
+
+
+
+
+
+
 
     <!-- FB Javascript SDK -->
     <script>
@@ -316,6 +326,11 @@
             currentFunction = new DrawingQuadraticCurve(contextReal,contextDraft);
         });
 
+        // $('#drawing-polygon').click(()=>{
+        //     currentFunction = new DrawingPolygon(contextReal,contextDraft);
+        // });
+
+    // 
         $('#drawing-text').click(()=>{
             currentFunction = new DrawingText(contextReal,contextDraft);
             $('#textTools').css({"display":"block"});
@@ -346,7 +361,9 @@
         $('#textL').click(()=>{
             config.textSize = 24;
         })
-
+    // 
+        
+       
         // CLEAR CANVAS
 
         $('#clear').click(()=>{
@@ -361,7 +378,8 @@
             contextBGImg.clearRect(0, 0, canvasBGImg.width, canvasBGImg.height);
         });
 
-        // BACKGROUND MANAGEMENT
+        // SUPPORTING TOOL
+
         $('#opacityF').click(()=>{
             $('#bg-img').css("opacity","1");
             bgOpacity = 1;
@@ -386,47 +404,48 @@
             $('#redo').click(()=>{
                 config.history.redo();
             })
-        
+
+        // LANDING MODAL
+        window.onload = function () {                                                
+            $('#landing-menu').modal('show');                           
+        }; 
+
+        $('#link2upload').click(()=>{
+            loadImage();
+        })
+
         // DOWNLOAD CANVAS IMAGE
+
         function download(){            
 
-            // MERGING CANVASES
-            var canvasA = document.getElementById('background');
-            var canvasB = document.getElementById('bg-img');
-            var canvasC = document.getElementById('canvas-real');
-            var canvasD = document.getElementById('canvas-combined');
+        // MERGING CANVASES
+        var canvasA = document.getElementById('background');
+        var canvasB = document.getElementById('bg-img');
+        var canvasC = document.getElementById('canvas-real');
+        var canvasD = document.getElementById('canvas-combined');
 
-            var contextCombined = canvasD.getContext("2d");
-            contextCombined.drawImage(canvasA,0,0);
-            contextCombined.globalAlpha = bgOpacity;
-            contextCombined.drawImage(canvasB,0,0);
-            contextCombined.globalAlpha = 1;
-            contextCombined.drawImage(canvasC,0,0);
-                
-            // DOWNLOAD ACTION
-            var download = document.getElementById("download");
-            var image = document.getElementById("canvas-combined").toDataURL("image/png")
-                        .replace("image/png", "image/octet-stream");
-                download.setAttribute("href", image);
+        var contextCombined = canvasD.getContext("2d");
+        contextCombined.drawImage(canvasA,0,0);
+        contextCombined.globalAlpha = bgOpacity;
+        contextCombined.drawImage(canvasB,0,0);
+        contextCombined.globalAlpha = 1;
+        contextCombined.drawImage(canvasC,0,0);
+            
+        // DOWNLOAD ACTION
+        var download = document.getElementById("download");
+        var image = document.getElementById("canvas-combined").toDataURL("image/png")
+                    .replace("image/png", "image/octet-stream");
+            download.setAttribute("href", image);
 
         }
     // 
-    
-    // LANDING MODAL
-    // window.onload = function () {                                                
-    //     $('#landing-menu').modal('show');                           
-    // }; 
-
-    // $('#link2upload').click(()=>{
-    //     loadImage();
-    // })
         
     </script>
 </body>
 </html>
 
 <!-- credit to artists
-    
+        
 <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-buddha" title="Close">Close</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"     title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 <div>Icons made by <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="eraser">eraser</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"     title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
