@@ -80,7 +80,7 @@ $('#uploadButton').click(()=>{
                                    action_type: 'og.shares',
                                    action_properties: JSON.stringify({
                                      object: {
-                                       'og:title': "Join & Share",
+                                       'og:title': "DrawOn!",
                                        'og:description': overrideDescription,
                                        'og:image': overrideImage
                                      }
