@@ -15,7 +15,7 @@ class DrawingRectangle extends PaintFunction{
         this.contextDraft.rect(this.origX,this.origY,coord[0]- this.origX,coord[1] - this.origY);
         this.contextDraft.fillStyle = config.fillCol;
         this.contextDraft.strokeStyle = config.strokeCol;
-        this.contextDraft.lineWidth = 5;
+        this.contextDraft.lineWidth = config.brushSize;
         this.contextDraft.stroke();
         this.contextDraft.fill();
 

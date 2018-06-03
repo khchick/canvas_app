@@ -40,3 +40,13 @@ exports.onFileChange= functions.storage.object().onChange(event => {
         })
     });
 });
+
+const cors = require('cors')({
+    origin: true
+  });
+  
+  exports.helloWorld = functions.https.onRequest((req, res) => {
+      cors(req, res, () => {
+          res.send("Hello from Firebase!");
+      });
+  });

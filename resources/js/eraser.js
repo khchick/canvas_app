@@ -7,7 +7,7 @@ class Eraser extends PaintFunction{
     onMouseDown(coord,event){
         // this.context.strokeStyle = "#000";
         this.context.lineJoin = "round";
-        this.context.lineWidth = 10;
+        this.context.lineWidth = config.brushSize;
         this.context.beginPath();
         this.context.moveTo(coord[0],coord[1]);
         this.draw(coord[0],coord[1]);

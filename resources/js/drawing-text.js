@@ -3,10 +3,8 @@ class DrawingText extends PaintFunction{
         super();
         this.contextReal = contextReal;
         this.contextDraft = contextDraft;
-        this.fontWeight = 600; //font weight
-        this.fontSize = 35; //font size
-        this.fontStyle = "Arial"; //font-family
-        this.fillStyle = "orange"; //font color
+        this.fontWeight = 600; 
+        this.fontSize = 35; 
         this.textX = [];
         this.textY = [];
     }
@@ -37,7 +35,7 @@ class DrawingText extends PaintFunction{
         this.textX= [];
         this.textY = [];
         this.onFinish();
-        $('#textTools').css({"display":"none"});
+        // $('#textTools').css({"display":"none"});
     }
 
     onFinish(){

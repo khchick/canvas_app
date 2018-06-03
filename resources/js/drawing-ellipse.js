@@ -3,33 +3,22 @@ class DrawingEllipse extends PaintFunction{
         super();
         this.contextReal = contextReal;
         this.contextDraft = contextDraft;
-        // this.w = canvasReal.width;
-        // this.w = canvasReal.height;
-        // this.contextDraft.translate(0.5, 0.5);
     }
 
     onMouseDown(coord){
-        // var rect = canvasReal.getBoundingClientRect();
         this.origX = coord[0];
         this.origY = coord[1];
     }
 
     onDragging(coord){
-        // var w = canvasReal.width;
-        // var h = canvasReal.height; 
-        // var rect = canvasReal.getBoundingClientRect();
         this.newX = coord[0];
         this.newY = coord[1];
-
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height); 
         this.drawEllipse(this.origX,this.origY,this.newX,this.newY);
-        // this.contextDraft.strokeStyle = 'rgba(255, 0, 0, 0.5)';
     }
 
     onMouseMove(){}
     onMouseUp(){
-        // var w = canvasReal.width;
-        // var h = canvasReal.height; 
         this.contextReal.drawImage(canvasDraft, 0, 0);
         this.contextDraft.clearRect(0, 0, canvasDraft.width, canvasDraft.height);
         this.onFinish();
@@ -60,7 +49,7 @@ class DrawingEllipse extends PaintFunction{
         }
         
         this.contextDraft.closePath();
-        this.contextDraft.lineWidth = 5;
+        this.contextDraft.lineWidth = config.brushSize;
         this.contextDraft.strokeStyle = config.strokeCol;
         this.contextDraft.fillStyle = config.fillCol;
         this.contextDraft.fill();

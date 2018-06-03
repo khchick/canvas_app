@@ -14,9 +14,13 @@ var config = {
         contextBG.fillStyle = `#${jscolor}`;
         contextBG.fillRect(0,0,canvasBG.width,canvasBG.height);
     },
-    textFont: $('#textFont').val(),
-    textSize: $('#textSize').val(),
+
+    // DEFAULT BRUSH SIZE
     brushSize: 5,
+
+    // TEXT MANAGEMENT
+    textFont: "Jua",
+    textSize: 20,
     changeText: function(){config.textFont=$('#textFont').val();$('#textFont').css('font-family',$('#textFont').val());$('.showTextSize').css('font-family',$('#textFont').val());},
 
 
@@ -44,44 +48,5 @@ var config = {
                 config.history.currentIndex = config.history.action;
             }
         },
-        // clear: function(){
-        //     contextReal.clearRect(0,0,canvasReal.width,canvasReal.height);
-        //     action = 0;
-        //     config.history.snapshot = [];
-        //     currentIndex = 0;
-            
-        // }
     }
 }
-
-//Change text size
-// $("#textSize")[0].oninput = function() {
-//     config.textSize = this.value;
-//     //Change visual
-//     $('.showTextSize').css("font-size",this.value+"px");
-//     $(".showTextSize").html(this.value);
-// }
-
-//Change brush size
-// $("#brushSize")[0].oninput = function() {
-//     canvasSettings.brushSize = this.value;
-//     //Change visual
-//     $('.sizeImage').css("width",this.value);
-//     $('.sizeImage').css("height",this.value);
-// }
-
-// //Shows textbox options if text tool is active
-// if(/textButton/.test($('.active')[0].className)){
-//     $('#textOptions').slideDown().css("display","flex");
-// }
-// else {
-//     $('#textOptions').slideUp();//.css("display","none");
-// }
-// $(window).resize(function(){
-//     $('#textOptions').css("display","none");
-// })
-// //Clear text
-// config.clearText = function(){
-//     $('#textInput').css({"display":"none","transform":"translateY(0) translateX(0)"});
-//     $('#textInput').val('');
-// }

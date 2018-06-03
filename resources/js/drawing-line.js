@@ -7,7 +7,7 @@ class DrawingLine extends PaintFunction{
     
     onMouseDown(coord,event){
         this.contextDraft.strokeStyle = config.strokeCol;
-        this.contextDraft.lineWidth = 5;
+        this.contextDraft.lineWidth = config.brushSize;
         this.origX = coord[0];
         this.origY = coord[1];
     }

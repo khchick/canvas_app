@@ -9,9 +9,8 @@ class DrawingQuadraticCurve extends PaintFunction{
         onMouseDown(coord,event){
             if (this.actionCounter === 0){
                 this.contextDraft.lineCap = "round"; 
-                this.contextDraft.strokeStyle = config.strokeCol; //canvas-configuration.js
-                this.contextDraft.lineWidth = 5;
-                // this.contextDraft.lineWidth = canvasSettings.brushSize; //canvas-configuration.js
+                this.contextDraft.strokeStyle = config.strokeCol; 
+                this.contextDraft.lineWidth = config.brushSize;
                 this.origX = coord[0];
                 this.origY = coord[1];
             } 

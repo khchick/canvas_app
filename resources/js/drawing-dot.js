@@ -53,11 +53,9 @@ class DrawingDot extends PaintFunction{
         
         this.contextDraft.closePath();
         this.contextDraft.lineJoin = "round";
-        this.contextDraft.lineWidth = 0;
         this.contextDraft.strokeStyle = config.strokeCol;
         this.contextDraft.fillStyle = config.strokeCol;
         this.contextDraft.fill();
-        // this.contextDraft.stroke();
     }
     
 }
