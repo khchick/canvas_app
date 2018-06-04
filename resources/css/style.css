@@ -179,7 +179,7 @@ body{
 .btn-collapsible {
 	overflow: hidden;
 	transition: all 1s ease-in-out;
-    max-width: 40px;
+    max-width: 50px;
 	margin: 5px 0;
   }
 
