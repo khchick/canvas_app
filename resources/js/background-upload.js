@@ -5,6 +5,7 @@ window.onload = function() {
 
 
     fileInput.addEventListener('change', function(e) {
+        console.log("running");
         var file = fileInput.files[0];
         var imageType = /image.*/;
 
@@ -43,6 +44,7 @@ var MAX_WIDTH = canvasReal.width;
 function render(src){
 	var image = new Image();
 	image.onload = function(){
+        console.log("running2");
         var canvas = document.getElementById("bg-img");
         if(image.height < MAX_HEIGHT) {
             image.width *= MAX_HEIGHT / image.height;
